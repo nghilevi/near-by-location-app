@@ -1,0 +1,24 @@
+
+<div class="projectList ul">
+  <div ng-animate="'animate'" class="col-xs-6 col-md-4 project cf li" ng-repeat="item in projects  | filter: query | orderBy:searchOrder" style="cursor: pointer;">
+    
+    <div class="info">
+      <div class="card effect__click" ng-click="flip($event)">
+        <div class="card__front" ng-attr-style="background-image: url('dist/img/project-thumbnails/{{item.noImage ? 'no-image' : item.name}}.png')" title="click me!">
+          <h2 title="Project Name">{{item.name}}</h2>
+        </div><!--front-->
+        <div class="card__back" style="padding:5px 5px;">
+          <p title="Category">{{item.name}} ({{item.cat}})</p>
+          <img class="rating" title="Rating" ng-src="dist/img/rating/{{item.rating}}.png">
+          <h3 title="Technologies">{{item.technologies}}</h3>
+          <div class="links" ng-repeat="link in item.links">
+              <a target="_blank" title="{{link[0]}}" ng-href="{{link[1]}}"><img class="links" ng-src="dist/img/links/{{link[0]}}.jpg"></a>
+          </div>
+        </div><!--back-->
+      </div><!--flipper-->
+    </div>
+    
+  </div>
+</div>
+
+<img id="back-to-top" src="dist/img/back2top.png" alt="">

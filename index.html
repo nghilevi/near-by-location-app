@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Nordea Near By Location Search</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	<link rel="icon" type="image/png" href="images/yeoman.png">
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+
+	<link rel="stylesheet" href="dev/styles/reset.css">
+	<link rel="stylesheet" href="dev/styles/fonts.css">
+	<link rel="stylesheet" href="dev/styles/list-view.css">
+</head>
+
+<body ng-app="nordeaLocationApp" ng-controller="list-view">
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+	
+
+	<div id="search" class="search">
+	    <input type="text" ng-model="searchWords" ng-change="search()">
+	</div>
+
+	<div class="venueList ul">
+	  <div ng-animate="'animate'" class="col-xs-6 col-md-4 venue cf li" ng-repeat="item in responseData">
+	    <div class="info">
+	        <h3 class="name">{{item.name}} ({{item.location.distance}}m away)</h3>
+	        <p class="address">{{item.location.address}}</p>
+	    </div>
+	  </div>
+	</div>
+
+	<img id="back-to-top" src="dist/img/back2top.png" alt="">
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-resource.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-animate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-route.min.js"></script>
+
+	<script src="dev/scripts/angularapp.js"></script>
+	<script src="dev/scripts/angularapp2.js"></script>
+	<script src="dev/scripts/controllers/list-view.js"></script>
+
+</body>
+</html> 
