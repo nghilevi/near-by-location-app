@@ -1,2 +1,5 @@
+dev/scripts/angularApp2.js
+node_modules/
+ignored/
 Requirements.txt
-dev/scripts/angularapp2.js
+npm-debug.log
