@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Wed Apr 08 2015 22:04:53 GMT+0300 (EEST)
-
 module.exports = function(config) {
   config.set({
 
@@ -16,7 +13,7 @@ module.exports = function(config) {
         'http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js',
         // 'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-mocks.js',
         'node_modules/angular-mocks-with-real-backend.js',
-        'dev/scripts/controllers/listView.js',
+        'dev/scripts/app.js',
         'dev/test/*.js'
     ],
 

@@ -1,0 +1,16 @@
+<div id="search" class="search">
+    <input type="text" ng-model="searchWords" ng-change="search()"
+    placeholder="Search something">
+</div>
+
+<div class="venueList ul">
+  <div ng-animate="'animate'" class="venue cf li" ng-repeat="item in responseData">
+    <li class="info">
+        <h3 class="name">{{item.name}} ({{item.location.distance}}m away)</h3>
+        <p class="address">{{item.location.address}}</p>
+    </li>
+  </div>
+</div>
+
+
+<img id="back-to-top" src="dev/img/back2top.png" alt="">

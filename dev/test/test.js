@@ -1,6 +1,17 @@
 describe('',function(){
-	var baseURL ="https://api.foursquare.com/v2/venues/search?client_id=CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ&client_secret=GYNP4URASNYRNRGXR5UEN2TGTKJHXY5FGSAXTIHXEUG1GYM2&v=20130815&ll=60.2217828,24.7787542&query=";
-	
+	var CLIENT_ID='CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
+   	CLIENT_SECRET='Enter your secret here',
+   	CLIENT_VERSION="20150408",
+   	currentLat=60,
+   	currentLon=25,
+   	baseURL ="https://api.foursquare.com/v2/venues/search"+
+          "?client_id="+CLIENT_ID+
+          "&client_secret="+CLIENT_SECRET+
+          "&v="+CLIENT_VERSION+
+          "&ll="+currentLat+
+          ","+currentLon+
+          "&query="; 
+
 	beforeEach(function(){
 		inject(function(_$http_){
 			$http=_$http_;
@@ -15,7 +26,7 @@ describe('',function(){
 	    	assert(success.data.response.venues.length > 0, 'receive more than 0 result');
 	        done(); // stop test from waiting
 	    }, function (fail) {
-	        console.log('Something wrong: ' + fail);
+	        console.log('Something wrong: ',fail);
 	        done(); // stop test from waiting
 	    });
 	});
@@ -28,7 +39,7 @@ describe('',function(){
 	        assert.equal(0, success.data.response.venues.length);
 	        done();
 	    }, function (fail) {
-	        console.log('Something wrong: ' + fail);
+	        console.log('Something wrong: ',fail);
 	        done();
 	    });
 	});
@@ -41,7 +52,7 @@ describe('',function(){
 	    	assert.equal(30, success.data.response.venues.length);
 	        done();
 	    }, function (fail) {
-	        console.log('Something wrong: ' + fail);
+	        console.log('Something wrong: ',fail);
 	        done();
 	    });
 	});

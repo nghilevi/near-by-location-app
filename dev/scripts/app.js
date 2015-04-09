@@ -1,9 +1,20 @@
-var app = angular.module('nordeaLocationApp', ['ngAnimate']);
+var app = angular.module('nearByLocationApp', ['ngAnimate','ngRoute',]);
+app.config(['$routeProvider',function ($routeProvider) {
+  $routeProvider
+    .when('/', {
+      templateUrl: 'dev/views/listView.html',
+      controller: 'listViewCtrl'
+    })
+    .otherwise({
+      templateUrl: 'dev/views/404.html'
+    });
+}]);
+
 
 app.constant('config', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
    CLIENT_SECRET:'Enter your secret here',
-   CLIENT_VERSION:"20130815"
+   CLIENT_VERSION:"20150408"
 });
 
 app.service('locationService',  ['$http','config', function($http,config){
@@ -22,19 +33,17 @@ app.service('locationService',  ['$http','config', function($http,config){
             navigator.geolocation.getCurrentPosition(function (position) {
               currentLat=position.coords.latitude;
               currentLon=position.coords.longitude;
-              baseURL=buildBaseURL(config.CLIENT_ID,config.CLIENT_SECRET,config.CLIENT_VERSION,currentLat,currentLon);
-              console.log(baseURL); 
+              baseURL=buildBaseURL(config.CLIENT_ID,config.CLIENT_SECRET,config.CLIENT_VERSION,currentLat,currentLon); 
           });
         } else {
             alert("Geolocation is not supported by this browser.");
         }
-        console.log(baseURL);
     };
     getLocation();
     return  {
-        search: function(query){
-            return  $http.get(baseURL+query);
-        }
+      search: function(query){
+          return  $http.get(baseURL+query);
+      }
     };
 }]);
 
