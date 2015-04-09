@@ -6,7 +6,7 @@ Remember to enter your `secretID` beforehand inside `dev/scripts/app.js` and `de
 
 `npm install` to install node modules
 
-`node server`.js and go to `localhost:3000` to run the app. 
+`node server.js` and go to `localhost:3000` to run the app. 
 
 `karma start` to run the tests. 
 
