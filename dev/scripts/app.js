@@ -17,7 +17,7 @@ app.constant('config', {
    CLIENT_VERSION:"20150408"
 });
 
-app.service('locationService',  ['$http','config', function($http,config){
+app.factory('locationService',  ['$http','config', function($http,config){
     var baseURL;
     var buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
         return "https://api.foursquare.com/v2/venues/search"+
