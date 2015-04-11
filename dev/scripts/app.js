@@ -11,13 +11,13 @@ app.config(['$routeProvider',function ($routeProvider) {
 }]);
 
 
-app.constant('config', {
+app.constant('clientConstants', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
    CLIENT_SECRET:'Enter your secret here',
    CLIENT_VERSION:"20150408"
 });
 
-app.factory('locationService',  ['$http','config', function($http,config){
+app.factory('locationService',  ['$http','clientConstants', function($http,clientConstants){
     var baseURL;
     var buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
         return "https://api.foursquare.com/v2/venues/search"+
@@ -33,7 +33,7 @@ app.factory('locationService',  ['$http','config', function($http,config){
             navigator.geolocation.getCurrentPosition(function (position) {
               currentLat=position.coords.latitude;
               currentLon=position.coords.longitude;
-              baseURL=buildBaseURL(config.CLIENT_ID,config.CLIENT_SECRET,config.CLIENT_VERSION,currentLat,currentLon); 
+              baseURL=buildBaseURL(clientConstants.CLIENT_ID,clientConstants.CLIENT_SECRET,clientConstants.CLIENT_VERSION,currentLat,currentLon); 
           });
         } else {
             alert("Geolocation is not supported by this browser.");
@@ -48,14 +48,28 @@ app.factory('locationService',  ['$http','config', function($http,config){
 }]);
 
 app.controller('listViewCtrl', ['$scope','locationService',function($scope, locationService) {
-  var currentLat,currentLon,baseURL;
-
+  var currentLat,currentLon,baseURL,unit ='m';
+  var responseDataObj={
+    name: "No results found",
+    location: {
+      distance: "no value",
+      address: "Please type in another search terms"
+    }
+  }
   $scope.test=false;
   $scope.search = function(){
     locationService.search($scope.searchWords).success(function(data) {
-        $scope.responseData=data.response.venues;
+        if(data.response.venues.length == 0){
+          $scope.responseData= [responseDataObj];
+          $scope.distanceText ="";
+        }else{
+          $scope.responseData=data.response.venues;
+          $scope.distanceText = unit+" away";
+        }
     }).error(function(data){
-        $scope.error  = data;
+        responseDataObj.name ="Something's wrong !!!";
+        responseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";
+        $scope.responseData= [responseDataObj];
     });    
   }
 
