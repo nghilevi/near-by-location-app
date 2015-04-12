@@ -18,43 +18,35 @@ describe('',function(){
 		});
 	});
 
+	var test = function(done,searchWord,assertFunction){
+	    $http({
+	        method: 'get',
+	        url: baseURL + searchWord
+	    }).then(function (success) {
+	    	assertFunction(success);
+	        done(); // stop test from waiting
+	    }, function (fail) {
+	        console.log('Something wrong: ',fail);
+	        done(); // stop test from waiting
+	    });
+	}
+
+
 	it('should return results',function(done){
-	    $http({
-	        method: 'get',
-	        url: baseURL + 'oulu'
-	    }).then(function (success) {
-	    	assert(success.data.response.venues.length > 0, 'receive more than 0 result');
-	        done(); // stop test from waiting
-	    }, function (fail) {
-	        console.log('Something wrong: ',fail);
-	        done(); // stop test from waiting
-	    });
+		var assertFunction = function(success){
+			assert(success.data.response.venues.length > 0, 'receive more than 0 result');
+		}
+		test(done,'oulu',assertFunction);
 	});
 
-	it('should return 0 result',function(done){
-	    $http({
-	        method: 'get',
-	        url: baseURL + '!@#$%^&*'
-	    }).then(function (success) {
-	        assert.equal(0, success.data.response.venues.length);
-	        done();
-	    }, function (fail) {
-	        console.log('Something wrong: ',fail);
-	        done();
-	    });
-	});
 
 	it('should return 0 result',function(done){
-	    $http({
-	        method: 'get',
-	        url: baseURL + ''
-	    }).then(function (success) {
-	    	assert.equal(30, success.data.response.venues.length);
-	        done();
-	    }, function (fail) {
-	        console.log('Something wrong: ',fail);
-	        done();
-	    });
+		var assertFunction = function(success){
+			assert.equal(0, success.data.response.venues.length);
+		}		
+		test(done,'!@#$%^&*',assertFunction);
+		test(done,'',assertFunction);
+		test(done,null,assertFunction);
 	});
 
 });
