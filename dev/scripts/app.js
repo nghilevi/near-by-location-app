@@ -18,8 +18,15 @@ app.constant('clientConstants', {
 });
 
 app.factory('locationService',  ['$http','clientConstants', function($http,clientConstants){
-    var baseURL;
-    var buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
+    var baseURL,unit ='m',
+    responseDataObj={
+      name: "No results found",
+      location: {
+        distance: "",
+        address: "Please type in another search terms"
+      }
+    },
+    buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
         return "https://api.foursquare.com/v2/venues/search"+
           "?client_id="+client_id+
           "&client_secret="+client_secret+
@@ -27,8 +34,8 @@ app.factory('locationService',  ['$http','clientConstants', function($http,clien
           "&ll="+currentLat+
           ","+currentLon+
           "&query=";    
-    }
-    var getLocation=function () {
+    },
+    getLocation=function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
               currentLat=position.coords.latitude;
@@ -39,38 +46,44 @@ app.factory('locationService',  ['$http','clientConstants', function($http,clien
             alert("Geolocation is not supported by this browser.");
         }
     };
+
     getLocation();
+
     return  {
+      distanceText: unit+' away',
       search: function(query){
-          return  $http.get(baseURL+query);
+        return $http.get(baseURL+query)
+        .then(function(data) {
+          if(data.data.response.venues.length == 0){
+            return [responseDataObj];
+          }else{
+            return data.data.response.venues;
+          }
+          
+        }).catch(function(data){
+          console.log("error");
+          distanceText="";
+          responseDataObj.name ="Something's wrong !!!";
+          responseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";  
+          return [responseDataObj];
+        });    
+        
       }
     };
 }]);
 
 app.controller('listViewCtrl', ['$scope','locationService',function($scope, locationService) {
-  var currentLat,currentLon,baseURL,unit ='m';
-  var responseDataObj={
-    name: "No results found",
-    location: {
-      distance: "no value",
-      address: "Please type in another search terms"
-    }
-  }
-  $scope.test=false;
+  
   $scope.search = function(){
-    locationService.search($scope.searchWords).success(function(data) {
-        if(data.response.venues.length == 0){
-          $scope.responseData= [responseDataObj];
-          $scope.distanceText ="";
-        }else{
-          $scope.responseData=data.response.venues;
-          $scope.distanceText = unit+" away";
-        }
-    }).error(function(data){
-        responseDataObj.name ="Something's wrong !!!";
-        responseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";
-        $scope.responseData= [responseDataObj];
-    });    
+    var query = $scope.searchWords;
+    locationService.search(query).then(function(responseDataArr){
+      $scope.responseDataArr= responseDataArr;
+      if (responseDataArr[0].location.distance == ""){
+        $scope.distanceText ="";
+      }else{
+        $scope.distanceText =locationService.distanceText;
+      }
+    });  
   }
 
   //Normal JS
