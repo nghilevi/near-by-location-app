@@ -17,57 +17,76 @@ app.constant('clientConstants', {
    CLIENT_VERSION:"20150408"
 });
 
-app.factory('locationService',  ['$http','clientConstants', function($http,clientConstants){
-    var baseURL,unit ='m',
+app.factory('baseURLService',['clientConstants',function(clientConstants){
+  var currentLat,currentLon,baseURL,
+  buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
+      return "https://api.foursquare.com/v2/venues/search"+
+        "?client_id="+client_id+
+        "&client_secret="+client_secret+
+        "&v="+client_version+
+        "&ll="+currentLat+
+        ","+currentLon+
+        "&query=";    
+  },
+  getCurrentLocation=function () {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            currentLat=position.coords.latitude;
+            currentLon=position.coords.longitude;
+            baseURL= buildBaseURL(clientConstants.CLIENT_ID,
+                        clientConstants.CLIENT_SECRET,
+                        clientConstants.CLIENT_VERSION,
+                        currentLat,currentLon);              
+        });
+      } else {
+          alert("Geolocation is not supported by this browser.");
+      }
+  };
+
+  return {
+    getCurrentLocation: getCurrentLocation,
+    getBaseURL: function(){
+      return baseURL;     
+    }
+  }
+
+}]);
+
+app.factory('locationService',  ['$http','baseURLService', function($http,baseURLService){
+    var baseURL,unit ='m',distanceText= unit+' away',
     responseDataObj={
       name: "No results found",
       location: {
         distance: "",
         address: "Please type in another search terms"
       }
-    },
-    buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
-        return "https://api.foursquare.com/v2/venues/search"+
-          "?client_id="+client_id+
-          "&client_secret="+client_secret+
-          "&v="+client_version+
-          "&ll="+currentLat+
-          ","+currentLon+
-          "&query=";    
-    },
-    getLocation=function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-              currentLat=position.coords.latitude;
-              currentLon=position.coords.longitude;
-              baseURL=buildBaseURL(clientConstants.CLIENT_ID,clientConstants.CLIENT_SECRET,clientConstants.CLIENT_VERSION,currentLat,currentLon); 
-          });
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
     };
+    
+    baseURLService.getCurrentLocation();
 
-    getLocation();
+    var returnData = function(query){
+      var baseURL = baseURLService.getBaseURL();
+      return $http.get(baseURL+query)
+      .then(function(data) {
+        if(data.data.response.venues.length == 0){
+          return [responseDataObj];
+        }else{
+          return data.data.response.venues;
+        }
+      })
+      .catch(function(data){
+        console.log("error");
+        distanceText="";
+        responseDataObj.name ="Something's wrong !!!";
+        responseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";  
+        return [responseDataObj];
+      });   
+    }
 
     return  {
-      distanceText: unit+' away',
+      distanceText: distanceText,
       search: function(query){
-        return $http.get(baseURL+query)
-        .then(function(data) {
-          if(data.data.response.venues.length == 0){
-            return [responseDataObj];
-          }else{
-            return data.data.response.venues;
-          }
-          
-        }).catch(function(data){
-          console.log("error");
-          distanceText="";
-          responseDataObj.name ="Something's wrong !!!";
-          responseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";  
-          return [responseDataObj];
-        });    
-        
+        return returnData(query);
       }
     };
 }]);
@@ -97,7 +116,6 @@ app.controller('listViewCtrl', ['$scope','locationService',function($scope, loca
     }
   });
   $("#back-to-top").click(function() {
-    console.log('click to top');
       $('html,body').scrollTop(0);
   });
 }]);
