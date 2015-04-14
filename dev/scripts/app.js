@@ -19,11 +19,11 @@ app.constant('clientConstants', {
 
 app.factory('baseURLService',['clientConstants',function(clientConstants){
   var currentLat,currentLon,baseURL,
-  buildBaseURL=function(client_id,client_secret,client_version,currentLat,currentLon){
+  buildBaseURL=function(currentLat,currentLon){
       return "https://api.foursquare.com/v2/venues/search"+
-        "?client_id="+client_id+
-        "&client_secret="+client_secret+
-        "&v="+client_version+
+        "?client_id="+clientConstants.CLIENT_ID+
+        "&client_secret="+clientConstants.CLIENT_SECRET+
+        "&v="+clientConstants.CLIENT_VERSION+
         "&ll="+currentLat+
         ","+currentLon+
         "&query=";    
@@ -33,10 +33,7 @@ app.factory('baseURLService',['clientConstants',function(clientConstants){
           navigator.geolocation.getCurrentPosition(function (position) {
             currentLat=position.coords.latitude;
             currentLon=position.coords.longitude;
-            baseURL= buildBaseURL(clientConstants.CLIENT_ID,
-                        clientConstants.CLIENT_SECRET,
-                        clientConstants.CLIENT_VERSION,
-                        currentLat,currentLon);              
+            baseURL= buildBaseURL(currentLat,currentLon);              
         });
       } else {
           alert("Geolocation is not supported by this browser.");
