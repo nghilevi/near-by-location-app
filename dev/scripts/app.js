@@ -13,11 +13,11 @@ app.config(['$routeProvider',function ($routeProvider) {
 
 app.constant('clientConstants', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
-   CLIENT_SECRET:'Enter your secret here',
+   //CLIENT_SECRET:'Enter your secret here',
    CLIENT_VERSION:"20150408"
 });
 
-app.factory('baseURLService',['clientConstants',function(clientConstants){
+app.factory('baseURLService',['clientConstants','$window',function(clientConstants,$window){
   var currentLat,currentLon,baseURL,
   buildBaseURL=function(currentLat,currentLon){
       return "https://api.foursquare.com/v2/venues/search"+
@@ -36,7 +36,7 @@ app.factory('baseURLService',['clientConstants',function(clientConstants){
             baseURL= buildBaseURL(currentLat,currentLon);              
         });
       } else {
-          alert("Geolocation is not supported by this browser.");
+          $window.alert("Geolocation is not supported by this browser.");
       }
   };
 
@@ -60,6 +60,8 @@ app.factory('locationService',  ['$http','baseURLService', function($http,baseUR
     };
     
     baseURLService.getCurrentLocation();
+
+    //getCurrentLocation(baseURLServiceCallBack);
 
     var returnData = function(query){
       var baseURL = baseURLService.getBaseURL();
