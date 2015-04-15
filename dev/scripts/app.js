@@ -14,7 +14,6 @@ app.config(['$routeProvider',function ($routeProvider) {
 app.constant('clientConstants', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
    //CLIENT_SECRET:'Enter your secret here',
-   
    CLIENT_VERSION:"20150408"
 });
 
@@ -55,8 +54,8 @@ app.factory('getCurrentLocation',['baseURLService','$window',function(baseURLSer
 }]);
 
 app.factory('locationService',  ['$http','baseURLService','getCurrentLocation',function($http,baseURLService,getCurrentLocation){
-    var baseURL,unit ='m',distanceText= unit+' away',
-    responseDataObj={
+    var baseURL,unit ='m',
+    defaultResponseDataObj={
       name: "No results found",
       location: {
         distance: "",
@@ -71,22 +70,29 @@ app.factory('locationService',  ['$http','baseURLService','getCurrentLocation',f
       return $http.get(baseURL+query)
       .then(function(data) {
         if(data.data.response.venues.length == 0){
-          return [responseDataObj];
+          return {
+            distanceText:"",
+            responseDataArr:[defaultResponseDataObj]
+          };
         }else{
-          return data.data.response.venues;
+          return {
+            distanceText: unit+' away',
+            responseDataArr:data.data.response.venues
+          };
         }
       })
       .catch(function(data){
         console.log("error");
-        distanceText="";
-        responseDataObj.name ="Something's wrong !!!";
-        responseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";  
-        return [responseDataObj];
+        defaultResponseDataObj.name ="Something's wrong !!!";
+        defaultResponseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";  
+        return {
+            distanceText:"",
+            responseDataArr:[defaultResponseDataObj]
+        };
       });   
     }
 
     return  {
-      distanceText: distanceText,
       search: function(query){
         return returnData(query);
       }
@@ -97,13 +103,9 @@ app.controller('listViewCtrl', ['$scope','locationService',function($scope, loca
   
   $scope.search = function(){
     var query = $scope.searchWords;
-    locationService.search(query).then(function(responseDataArr){
-      $scope.responseDataArr= responseDataArr;
-      if (responseDataArr[0].location.distance == ""){
-        $scope.distanceText ="";
-      }else{
-        $scope.distanceText =locationService.distanceText;
-      }
+    locationService.search(query).then(function(res){
+      $scope.responseDataArr= res.responseDataArr;
+      $scope.distanceText =res.distanceText;
     });  
   }
 
