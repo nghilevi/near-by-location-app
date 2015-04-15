@@ -14,13 +14,14 @@ app.config(['$routeProvider',function ($routeProvider) {
 app.constant('clientConstants', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
    //CLIENT_SECRET:'Enter your secret here',
+   
    CLIENT_VERSION:"20150408"
 });
 
-app.factory('baseURLService',['clientConstants','$window',function(clientConstants,$window){
-  var currentLat,currentLon,baseURL,
-  buildBaseURL=function(currentLat,currentLon){
-      return "https://api.foursquare.com/v2/venues/search"+
+app.factory('baseURLService',['clientConstants',function(clientConstants){
+  var baseURL,
+  setBaseURL=function(currentLat,currentLon){
+      baseURL= "https://api.foursquare.com/v2/venues/search"+
         "?client_id="+clientConstants.CLIENT_ID+
         "&client_secret="+clientConstants.CLIENT_SECRET+
         "&v="+clientConstants.CLIENT_VERSION+
@@ -28,28 +29,32 @@ app.factory('baseURLService',['clientConstants','$window',function(clientConstan
         ","+currentLon+
         "&query=";    
   },
-  getCurrentLocation=function () {
+  getBaseURL=function(){
+    return baseURL;
+  };
+
+  return {
+    setBaseURL: setBaseURL,
+    getBaseURL: getBaseURL
+  }
+
+}]);
+
+app.factory('getCurrentLocation',['baseURLService','$window',function(baseURLService,$window){
+  return function () {
       if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
             currentLat=position.coords.latitude;
             currentLon=position.coords.longitude;
-            baseURL= buildBaseURL(currentLat,currentLon);              
+            baseURLService.setBaseURL(currentLat,currentLon);              
         });
       } else {
           $window.alert("Geolocation is not supported by this browser.");
       }
   };
-
-  return {
-    getCurrentLocation: getCurrentLocation,
-    getBaseURL: function(){
-      return baseURL;     
-    }
-  }
-
 }]);
 
-app.factory('locationService',  ['$http','baseURLService', function($http,baseURLService){
+app.factory('locationService',  ['$http','baseURLService','getCurrentLocation',function($http,baseURLService,getCurrentLocation){
     var baseURL,unit ='m',distanceText= unit+' away',
     responseDataObj={
       name: "No results found",
@@ -58,10 +63,8 @@ app.factory('locationService',  ['$http','baseURLService', function($http,baseUR
         address: "Please type in another search terms"
       }
     };
-    
-    baseURLService.getCurrentLocation();
 
-    //getCurrentLocation(baseURLServiceCallBack);
+    getCurrentLocation();
 
     var returnData = function(query){
       var baseURL = baseURLService.getBaseURL();
