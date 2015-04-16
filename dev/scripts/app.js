@@ -54,7 +54,7 @@ app.factory('getCurrentLocation',['baseURLService','$window',function(baseURLSer
 }]);
 
 app.factory('locationService',  ['$http','baseURLService','getCurrentLocation',function($http,baseURLService,getCurrentLocation){
-    var baseURL,unit ='m',
+    var unit ='m',
     defaultResponseDataObj={
       name: "No results found",
       location: {
@@ -99,14 +99,20 @@ app.factory('locationService',  ['$http','baseURLService','getCurrentLocation',f
     };
 }]);
 
-app.controller('listViewCtrl', ['$scope','locationService',function($scope, locationService) {
-  
+app.controller('listViewCtrl',
+ ['$scope','locationService','$timeout',
+ function($scope, locationService,$timeout) {
+  var timeoutPromise;
   $scope.search = function(){
-    var query = $scope.searchWords;
-    locationService.search(query).then(function(res){
-      $scope.responseDataArr= res.responseDataArr;
-      $scope.distanceText =res.distanceText;
-    });  
+    $timeout.cancel(timeoutPromise);
+    var query = $scope.searchWords;      
+    timeoutPromise = $timeout(function() {
+      locationService.search(query).then(function(res){
+        $scope.responseDataArr= res.responseDataArr;
+        $scope.distanceText =res.distanceText;
+      });
+    }, 500);
+  
   }
 
   //Normal JS
