@@ -3,7 +3,7 @@ var locationService = angular.module('locationService',[]);
 locationService.constant('clientConstants', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
    //CLIENT_SECRET:'Enter your secret here',
-
+   
    CLIENT_VERSION:"20150408"
 });
 
