@@ -1,6 +1,7 @@
 module.exports = function(config) {
   config.set({
 
+
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
@@ -11,10 +12,10 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js',
-        // 'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-mocks.js',
-        'node_modules/angular-mocks-with-real-backend.js',
-        'dev/scripts/app.js',
-        'dev/test/*.js'
+        'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-mocks.js',
+        // 'node_modules/angular-mocks-with-real-backend.js',
+        'dev/scripts/*.js',
+        'dev/test/test.js'
     ],
 
 
@@ -54,7 +55,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Firefox'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
