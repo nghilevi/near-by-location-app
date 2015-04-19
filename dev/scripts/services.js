@@ -3,7 +3,7 @@ var locationService = angular.module('locationService',[]);
 locationService.constant('clientConstants', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
    //CLIENT_SECRET:'Enter your secret here',
-   CLIENT_SECRET:'GYNP4URASNYRNRGXR5UEN2TGTKJHXY5FGSAXTIHXEUG1GYM2',
+   
    CLIENT_VERSION:"20150408"
 });
 
@@ -43,7 +43,7 @@ locationService.factory('getCurrentLocation',['baseURLService','$window',functio
   };
 }]);
 
-locationService.factory('locationService',  ['$http','baseURLService','getCurrentLocation',function($http,baseURLService,getCurrentLocation){
+locationService.factory('locationService',  ['$http','baseURLService','getCurrentLocation','$q',function($http,baseURLService,getCurrentLocation,$q){
     var unit ='m',
     defaultResponseDataObj={
       name: "No results found",
@@ -57,7 +57,7 @@ locationService.factory('locationService',  ['$http','baseURLService','getCurren
 
     var returnData = function(query){
       var baseURL = baseURLService.getBaseURL();
-      console.log('baseURL+query',baseURL+query);
+      var report = $q.defer()
       return $http.get(baseURL+query)
       .then(function(data) {
         if(data.data.response.venues.length == 0){
@@ -71,6 +71,7 @@ locationService.factory('locationService',  ['$http','baseURLService','getCurren
             responseDataArr:data.data.response.venues
           };
         }
+        report.resolve(data);
       })
       .catch(function(data){
         console.log("error");
@@ -81,6 +82,8 @@ locationService.factory('locationService',  ['$http','baseURLService','getCurren
             responseDataArr:[defaultResponseDataObj]
         };
       });   
+
+      return report.promise;
     }
 
     return  {

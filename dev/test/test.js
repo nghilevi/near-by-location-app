@@ -20,32 +20,16 @@ describe('Controller: listViewCtrl', function() {
     });
   }));
 
-  // it('returns items when typing a search word', function() {
-
-  //   expect(_scope.search).toBeDefined();
-  //   expect(_scope.responseDataArr).toBe(undefined);
-  //   expect(_scope.distanceText).toBe(undefined);
+  it('should return some data', function() {
+    expect(_scope.getData).toBeDefined(); //true
+    var getData=_scope.getData;
     
-  //   _scope.searchWords='sushi';
-
-  //   _locationService.search(_scope.searchWords).then(function(res){
-  //     console.log(res) //never reach this
-  //   });
-
-  // });
-
-  it('should return report data from Google Analytics', function() {
-    var url = 'https://api.foursquare.com/v2/venues/search?client_id=CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ&client_secret=GYNP4URASNYRNRGXR5UEN2TGTKJHXY5FGSAXTIHXEUG1GYM2&v=20150408&ll=60.221715200000006,24.77866&query=sushi'
-      
-    _scope.getReport().then(function(body) {
+    getData('sushi').then(function(body) {
       console.log('body',body);
-      console.log('body.response',body.response);
-      console.log('body.response.venues',body.response.venues);
-      console.log('body.response.venues[0]',body.response.venues[0]);
-      expect(body.kind).toBe('analytics#gaData')
+      //expect(body.response).toBe('analytics#gaData')
     })
-    _httpBackend.expectGET(url).respond({});
-    _timeout.flush()
-    _httpBackend.flush()
+    //_httpBackend.expectGET(url).respond({});
+    //_timeout.flush()
+    //_httpBackend.flush()
   })
 });
