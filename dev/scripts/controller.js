@@ -1,22 +1,28 @@
 var app = angular.module('appController', ['locationService']);
 
 app.controller('listViewCtrl',
- ['$scope','locationService','$timeout',
- function($scope, locationService,$timeout) {
+ ['$scope','locationService','$timeout','$q','$http',
+ function($scope, locationService,$timeout,$q,$http) {
   var timeoutPromise;
-
   $scope.search = function(){
+
     $timeout.cancel(timeoutPromise);
     var query = $scope.searchWords;      
     timeoutPromise = $timeout(function() {
-      locationService.search(query).then(function(res){
-        $scope.responseDataArr= res.responseDataArr;
-        $scope.distanceText =res.distanceText;
-      });
+      
+      $scope.getData(query);
+
     }, 500);
   
   }
 
+	$scope.getData = function(query) {
+	  locationService.search(query).then(function(res){
+        $scope.responseDataArr= res.responseDataArr;
+        $scope.distanceText =res.distanceText;
+    });
+	}
+	
   //Back to top button, should be written in Angular-ish way still, but this is just a quick snippet
   // $('#back-to-top').hide();
   // //Animation while scrolling
