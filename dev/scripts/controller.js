@@ -13,6 +13,9 @@ app.controller('listViewCtrl',
         $scope.responseDataArr= res.responseDataArr;
         $scope.distanceText =res.distanceText;
       });
+
+      $scope.getReport();
+
     }, 500);
   
   }
@@ -21,8 +24,10 @@ app.controller('listViewCtrl',
 	  report = $q.defer()
 
 	  $timeout(function() {
-	    $http({method: 'GET', url: 'https://www.googleapis.com/analytics/v3/data/ga'})
+      var url = 'https://api.foursquare.com/v2/venues/search?client_id=CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ&client_secret=GYNP4URASNYRNRGXR5UEN2TGTKJHXY5FGSAXTIHXEUG1GYM2&v=20150408&ll=60.221715200000006,24.77866&query=sushi'
+	    $http({method: 'GET', url: url})
 	      .success(function(body) {
+          console.log('body from controller.response',body.response);
 	        report.resolve(body)
 	      })
 	  }, 300)
