@@ -1,95 +1,81 @@
-var locationService = angular.module('locationService',[]);
+angular.module("appServices",  ['geolocation'])
 
-locationService.constant('clientConstants', {
+.constant('clientConst', {
    CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
-   //CLIENT_SECRET:'Enter your secret here',
-   
+   //CLIENT_SECRET:'',
    CLIENT_VERSION:"20150408"
-});
+})
 
-locationService.factory('baseURLService',['clientConstants',function(clientConstants){
-  var baseURL,
-  setBaseURL=function(currentLat,currentLon){
-      baseURL= "https://api.foursquare.com/v2/venues/search"+
-        "?client_id="+clientConstants.CLIENT_ID+
-        "&client_secret="+clientConstants.CLIENT_SECRET+
-        "&v="+clientConstants.CLIENT_VERSION+
-        "&ll="+currentLat+
-        ","+currentLon+
-        "&query=";    
-  },
-  getBaseURL=function(){
-    return baseURL;
+.factory('resItem', function () {
+  var messageConst ={
+   ZERO_RESULT:["No results found","","Please type in another search terms"],
+   CALM:["Enhance your calm!!!","","We are trying to figure out where are you. Please type in the search box again after a few seconds!"],
+   ERROR:["Something's wrong !!!","","Please wait or refresh the page, and remember to choose 'Share Location'"]
+  }
+
+  var ResItem = function (name,distance,address) {
+    this.name= name;
+    this.distance= distance;
+    this.address= address;     
+  };
+
+  var resItemFactory= function (messType) {
+    var args=messageConst[messType]
+    return new ResItem(args[0],args[1],args[2]);
   };
 
   return {
-    setBaseURL: setBaseURL,
-    getBaseURL: getBaseURL
-  }
-
-}]);
-
-locationService.factory('getCurrentLocation',['baseURLService','$window',function(baseURLService,$window){
-  return function () {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            currentLat=position.coords.latitude;
-            currentLon=position.coords.longitude;
-            baseURLService.setBaseURL(currentLat,currentLon);              
-        });
-      } else {
-          $window.alert("Geolocation is not supported by this browser.");
-      }
-  };
-}]);
-
-locationService.factory('locationService',  ['$http','baseURLService','getCurrentLocation','$q',function($http,baseURLService,getCurrentLocation,$q){
-    var unit ='m',
-    defaultResponseDataObj={
-      name: "No results found",
-      location: {
-        distance: "",
-        address: "Please type in another search terms"
-      }
-    };
-
-    getCurrentLocation();
-
-    var returnData = function(query){
-      var baseURL = baseURLService.getBaseURL();
-      var report = $q.defer()
-      return $http.get(baseURL+query)
-      .then(function(data) {
-        if(data.data.response.venues.length == 0){
-          return {
-            distanceText:"",
-            responseDataArr:[defaultResponseDataObj]
-          };
-        }else{
-          return {
-            distanceText: unit+' away',
-            responseDataArr:data.data.response.venues
-          };
-        }
-        report.resolve(data);
-      })
-      .catch(function(data){
-        console.log("error");
-        defaultResponseDataObj.name ="Something's wrong !!!";
-        defaultResponseDataObj.location.address="Please refresh the page, and remember to choose 'Share Location'";  
-        return {
-            distanceText:"",
-            responseDataArr:[defaultResponseDataObj]
-        };
-      });   
-
-      return report.promise;
+    getInstance: function (name,distance,address,messType) {
+      return messType == undefined ? new ResItem(name,distance,address) : resItemFactory(messType);
     }
+  };
+})
+.factory('locationService',function($http,$q,geolocation,clientConst,resItem){
+  var baseURL;
 
-    return  {
-      search: function(query){
+  geolocation.getLocation().then(function(data){
+    baseURL= "https://api.foursquare.com/v2/venues/search"+
+        "?client_id="+clientConst.CLIENT_ID+
+        "&client_secret="+clientConst.CLIENT_SECRET+
+        "&v="+clientConst.CLIENT_VERSION+
+        "&ll="+data.coords.latitude+
+        ","+data.coords.longitude+
+        "&query="; 
+    console.log('baseURL',baseURL);
+  });
+      
+  var search = function(query){     
+    if(baseURL==undefined){
+      return $q.reject(404);
+    }else{
+      return $http.get(baseURL+query,{transformResponse: transformLocationData}).then(successRes,errorRes) 
+    }
+    
+  } 
 
-        return returnData(query);
-      }
-    };
-}]);
+  function successRes(res) {return res.data}
+  function errorRes(res) {return res}
+  function transformLocationData(data,headerGetter){
+    console.log('headerGetter',headerGetter);
+    var unit = 'm';
+    data = angular.fromJson(data);
+    var transformed, venuesArray = data.response.venues;
+    console.log('venuesArray',venuesArray)
+    if(venuesArray.length != 0){
+      console.log('start loop by forEach');
+      transformed=venuesArray.map(function(current){
+        return resItem.getInstance(
+          current.name,
+          current.location.distance+unit+' away',
+          current.location.address + ' '+current.location.city
+        );
+      });
+    }else{
+      transformed=[resItem.getInstance(null,null,null,"ZERO_RESULT")];
+    }
+    console.log('transformed',transformed)
+    return transformed;}
+
+  return  {search: search};
+
+});
