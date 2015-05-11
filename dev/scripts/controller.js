@@ -1,39 +1,18 @@
-var app = angular.module('appController', ['locationService']);
+angular.module('appControllers', ['appServices'])
 
-app.controller('listViewCtrl',
- ['$scope','locationService','$timeout','$q','$http',
- function($scope, locationService,$timeout,$q,$http) {
+.controller('listViewCtrl',function($scope, locationService,$timeout,resItem) {
+
   var timeoutPromise;
   $scope.search = function(){
-
     $timeout.cancel(timeoutPromise);
-    var query = $scope.searchWords;      
     timeoutPromise = $timeout(function() {
-      
-      $scope.getData(query);
-
+      locationService.search($scope.searchWords).then(successResponse,errorResponse);
     }, 500);
-  
   }
 
-	$scope.getData = function(query) {
-	  locationService.search(query).then(function(res){
-        $scope.responseDataArr= res.responseDataArr;
-        $scope.distanceText =res.distanceText;
-    });
-	}
-	
-  //Back to top button, should be written in Angular-ish way still, but this is just a quick snippet
-  // $('#back-to-top').hide();
-  // //Animation while scrolling
-  // $(window).scroll(function() {
-  //   if ($(this).scrollTop()>800){
-  //       $('#back-to-top').fadeIn();
-  //   }else{     
-  //      $('#back-to-top').fadeOut();
-  //   }
-  // });
-  // $("#back-to-top").click(function() {
-  //     $('html,body').scrollTop(0);
-  // });
-}]);
+	function successResponse(res) {$scope.responseDataArr= res;}
+  function errorResponse(res) {
+    console.log('res',res)
+    $scope.responseDataArr= res==404 ? [resItem.getInstance(null,null,null,"CALM")] : [resItem.getInstance(null,null,null,"ERROR")];
+  }
+});

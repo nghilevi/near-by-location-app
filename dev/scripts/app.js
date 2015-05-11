@@ -1,6 +1,6 @@
-var app = angular.module('nearByLocationApp', ['ngAnimate','ngRoute','appController']);
+angular.module('nearByLocationApp', ['ngAnimate','ngRoute','appControllers','appServices'])
 
-app.config(['$routeProvider',function ($routeProvider) {
+.config(function ($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'dev/views/listView.html',
@@ -9,7 +9,7 @@ app.config(['$routeProvider',function ($routeProvider) {
     .otherwise({
       templateUrl: 'dev/views/404.html'
     });
-}]);
+});
 
 
 
