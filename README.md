@@ -3,12 +3,13 @@ NearByLocation Web app using Foursquare API v2.
 Here is the [Demo](http://www.codingisloving.com/WEBAPPS/nearbylocationwebapp/index.html#/) version
 
 ## Usage
-To run the app locally (recommended as it always has the latest updates and the user can run tests)
+Below are some of the instructions on runing the web app locally (recommended as it always has the latest updates and the user can run tests)
 
-1. Run `bower install` and `npm install` to install bower and node dependencies 
-2. Remember to enter your `secretID` inside `src/scripts/constants.js`
-3. Open the `index.html` on a local server to run the app. Remember to click on "Share location" so that the browser can detect your location.
-4. Run `karma start` to run the tests. 
+* Run `bower install` and `npm install` to install bower and node dependencies 
+* Remember to enter your `secretID` inside `src/scripts/constants.js`
+* Open the `index.html` on a web (local) server to run the app. It's important to note that it has to be run on a web server. 
+* Optionally, remember to click on "Share location" so that the browser can detect your location.
+* Run `karma start` to run the tests. 
 
 ## Description
 As can be seen in package.json and bower.json, the develop stacks includes: 

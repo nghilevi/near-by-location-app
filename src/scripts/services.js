@@ -68,10 +68,10 @@ angular.module("appServices",  ['appConstants','geolocation'])
     $timeout.cancel(timeoutPromise);
     timeoutPromise = $timeout(function() {
       locationService.search(scope.searchWords).then(function (res) {
-        scope.responseDataArr= res;
+        scope.resultsList= res;
       }, function (res) {
         console.log("res",res)
-        scope.responseDataArr= res==404 ? [resItem.create({type:"ERROR"})] : [resItem.create({type:"CALM"})];
+        scope.resultsList= res==404 ? [resItem.create({type:"ERROR"})] : [resItem.create({type:"CALM"})];
       });
     }, 500);
   }
