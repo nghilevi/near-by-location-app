@@ -1,0 +1,16 @@
+{
+  "name": "nLocationApp",
+  "version": "0.0.0",
+  "homepage": "https://github.com/vinhnghi223/nLocationApp",
+  "authors": [
+    "nghi <vinhnghi223@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.4.3",
+    "angularjs-geolocation": "~0.1.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.3"
+  }
+}
