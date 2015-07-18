@@ -1,17 +1,9 @@
 angular.module('appControllers', ['appServices'])
 
-.controller('listViewCtrl',function($scope, locationService,$timeout,resItem) {
+.controller('listViewCtrl',function($scope, searchService) {
 
-  var timeoutPromise;
   $scope.search = function(){
-    $timeout.cancel(timeoutPromise);
-    timeoutPromise = $timeout(function() {
-      locationService.search($scope.searchWords).then(successResponse,errorResponse);
-    }, 500);
+    searchService.search($scope)
   }
 
-	function successResponse(res) {$scope.responseDataArr= res;}
-  function errorResponse(res) {
-    $scope.responseDataArr= res==404 ? [resItem.getInstance(null,null,null,"CALM")] : [resItem.getInstance(null,null,null,"ERROR")];
-  }
 });

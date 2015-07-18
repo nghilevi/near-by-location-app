@@ -6,6 +6,7 @@ Requirements.txt
 npm-debug.log
 
 #folder
+.idea/
 node_modules/
 bower_components/
 ignored/

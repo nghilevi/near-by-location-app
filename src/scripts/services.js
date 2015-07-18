@@ -78,4 +78,22 @@ angular.module("appServices",  ['geolocation'])
 
   return  {search: search};
 
-});
+})
+  .factory("searchService", function (locationService,$timeout,resItem) {
+    var timeoutPromise;
+    var search = function (scope) {
+      var searchWords=scope.searchWords;
+      $timeout.cancel(timeoutPromise);
+      timeoutPromise = $timeout(function() {
+        locationService.search(searchWords).then(function (res) {
+          scope.responseDataArr= res;
+        }, function (res) {
+          scope.responseDataArr= res==404 ? [resItem.getInstance(null,null,null,"CALM")] : [resItem.getInstance(null,null,null,"ERROR")];
+        });
+      }, 500);
+    }
+
+    return {
+      search:search
+    }
+  })
