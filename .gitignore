@@ -1,5 +1,7 @@
 dev/scripts/angularApp2.js
+src/scripts/services.js
 node_modules/
+bower_components/
 ignored/
 Requirements.txt
 npm-debug.log
