@@ -1,7 +1,5 @@
 #files
-dev/scripts/angularApp2.js
-src/scripts/constants.js
-specs.txt
+src/scripts/secret.txt
 Requirements.txt
 npm-debug.log
 
@@ -9,4 +7,4 @@ npm-debug.log
 .idea/
 node_modules/
 bower_components/
-ignored/
+
