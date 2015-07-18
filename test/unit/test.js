@@ -1,4 +1,4 @@
-describe('Controller: listViewCtrl', function() {
+xdescribe('Controller: listViewCtrl', function() {
   beforeEach(module('appController'));
 
   var listViewCtrl,

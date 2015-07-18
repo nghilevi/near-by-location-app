@@ -1,7 +1,11 @@
+#files
 dev/scripts/angularApp2.js
 src/scripts/services.js
+specs.txt
+Requirements.txt
+npm-debug.log
+
+#folder
 node_modules/
 bower_components/
 ignored/
-Requirements.txt
-npm-debug.log
