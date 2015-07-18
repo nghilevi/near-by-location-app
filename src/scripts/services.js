@@ -1,31 +1,18 @@
-angular.module("appServices",  ['geolocation'])
-
-.constant('clientConst', {
-  CLIENT_ID:'CYEMKOM4OLTP5PHMOFVUJJAMWT5CH5G1JBCYREATW21XLLSZ',
-  CLIENT_SECRET:'GYNP4URASNYRNRGXR5UEN2TGTKJHXY5FGSAXTIHXEUG1GYM2',
-  CLIENT_VERSION:"20150408",
-  ZERO_RESULT:["No results found","","Please type in another search terms"],
-  CALM:["Enhance your calm!!!","","We are trying to figure out where are you. Please type in the search box again after a few seconds!"],
-  ERROR:["Something's wrong !!!","","Please wait or refresh the page, and remember to choose 'Share Location'"],
-  UNIT:"m"
-})
+angular.module("appServices",  ['appConstants','geolocation'])
 
 .factory('resItem', function (clientConst) {
-
-  var ResItem = function (name,distance,address) {
-    this.name= name;
-    this.distance= distance;
-    this.address= address;
-  };
-
-  var resItemFactory= function (messType) {
-    var args=clientConst[messType]
-    return new ResItem(args[0],args[1],args[2]);
-  };
-
   return {
-    getInstance: function (name,distance,address,messType) {
-      return messType == undefined ? new ResItem(name,distance,address) : resItemFactory(messType);
+    create: function (param) {
+      var resItem = {}
+      if(param.type){
+        param= clientConst[param.type]
+      }
+      angular.extend(resItem, {
+        name:param.name,
+        distance: param.distance,
+        address: param.address
+      })
+      return resItem
     }
   };
 })
@@ -61,14 +48,14 @@ angular.module("appServices",  ['geolocation'])
     if(venuesArray.length != 0){
       //console.log('start loop by forEach');
       transformed=venuesArray.map(function(current){
-        return resItem.getInstance(
-          current.name,
-          current.location.distance+clientConst.UNIT+' away',
-          current.location.address + ' '+current.location.city
-        );
+        return resItem.create({
+          name:current.name,
+          distance:current.location.distance+clientConst.UNIT,
+          address:(current.location.address || "")+ ' '+ (current.location.city || "")
+        });
       });
     }else{
-      transformed=[resItem.getInstance(null,null,null,"ZERO_RESULT")];
+      transformed=[resItem.create({type:"ZERO_RESULT"})];
     }
     //console.log('transformed',transformed)
     return transformed;
@@ -84,7 +71,7 @@ angular.module("appServices",  ['geolocation'])
         scope.responseDataArr= res;
       }, function (res) {
         console.log("res",res)
-        scope.responseDataArr= res==404 ? [resItem.getInstance(null,null,null,"ERROR")] : [resItem.getInstance(null,null,null,"CALM")];
+        scope.responseDataArr= res==404 ? [resItem.create({type:"ERROR"})] : [resItem.create({type:"CALM"})];
       });
     }, 500);
   }

@@ -1,6 +1,6 @@
 #files
 dev/scripts/angularApp2.js
-src/scripts/services.js
+src/scripts/constants.js
 specs.txt
 Requirements.txt
 npm-debug.log
