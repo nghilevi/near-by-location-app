@@ -1,4 +1,5 @@
-angular.module('nearByLocationApp', ['ngAnimate','ngRoute','appControllers','appServices'])
+angular.module('nearByLocationApp',
+  ['ngAnimate','ngRoute','appControllers','appServices'])
 
 .config(function ($routeProvider) {
   $routeProvider
