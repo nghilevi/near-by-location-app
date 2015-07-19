@@ -9,23 +9,17 @@ Below are some of the instructions on runing the web app locally (recommended as
 * Remember to enter your `secretID` inside `src/scripts/constants.js`
 * Open the `index.html` on a web (local) server to run the app. It's important to note that it has to be run on a web server. 
 * Optionally, remember to click on "Share location" so that the browser can detect your location.
-* Run `karma start` to run the tests. 
+* Run `karma start` or `grunt test` to run the tests.
+* karma.conf.js stores the karma config. Currently it uses PhantomJS, a headless browser, to run unit test. You can configure it to be `Firefox` or `Chrome` to your preference in the `browsers` property. If you choose `Chrome`, you have also install chrome launcher for karma by issuing `npm install karma-chrome-launcher`
 
 ## Description
 As can be seen in package.json and bower.json, the develop stacks includes: 
 Dependencies for frontend development:
-`
-    "angular": "~1.4.3",
-    "angularjs-geolocation": "~0.1.1",
-    "jquery": "~2.1.4",
-    "angular-route": "~1.4.3",
-    "angular-animate": "~1.4.3",
-    "bootstrap": "~3.3.5"
-`
+`angularjs, angular-route, angularjs-geolocation, angular-animate, jquery, bootstrap`
+
 Dependencies for unit & E2E testing:
-`
-    "angular-mocks": "~1.4.3"
-`
-The project is also employed Travis for Continous Intergration and Grunt for automated buid tool system.
+`angular-mocks, karma, jasmine, phantomjs`
+
+The project is also employed `Travis` for CI and `Grunt` for automated buid tool system.
 
 More detail explanations are provided in the screencast.
