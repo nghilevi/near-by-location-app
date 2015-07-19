@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "0.10"
 
-before_script:
+before_script: #used to install	Karma and Bower prior to running any tests
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - npm start > /dev/null &
