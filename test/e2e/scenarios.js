@@ -11,7 +11,7 @@ describe('Given the user opens the index page', function () {
   afterEach(function () {
     searchInput.clear();
   })
-  describe("When the user don't share location", function () {
+  xdescribe("When the user don't share location", function () {
     it('Then there will be an error message no matter what the user types', function () {
       searchInput.sendKeys(validSearchWords);
       expect(nameElem.getText()).toContain("wrong");
@@ -19,7 +19,7 @@ describe('Given the user opens the index page', function () {
   })
   describe("When the user shares location", function () {
     beforeEach(function () {
-      element(by.buttonText("Share Location")).click();
+      //element(by.buttonText("Share Location")).click();
     })
     describe("And the user types in a valid search words", function () {
       it('Then there will be results', function () {

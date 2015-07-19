@@ -15,5 +15,5 @@ exports.config = {
   capabilities:{
     browserName: 'firefox'
   },
-  baseUrl:	'http://localhost:3000/'
+  baseUrl:	'http://localhost:8081/'
 };
