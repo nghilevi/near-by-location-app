@@ -4,6 +4,7 @@
 </div>
 
 <div class="venueList ul">
+  <div ng-animate="'animate'" class="venue cf li" ng-show="loading">Loading ...</div>
   <div ng-animate="'animate'" class="venue cf li" ng-repeat="venue in venueList">
     <venue-item venue="venue"></venue-item>
   </div>

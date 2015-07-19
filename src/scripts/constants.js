@@ -12,15 +12,10 @@ angular.module("appConstants",[])
     distance:"",
     address:"Please type in another search terms"
   },
-  CALM:{
-    name:"Enhance your calm!!!",
-    distance:"",
-    address:"We are trying to figure out where are you. Please type in the search box again after a few seconds!"
-  },
   ERROR:{
     name:"Something's wrong !!!",
     distance:"",
-    address:"Please wait or refresh the page, and remember to choose 'Share Location'"
+    address:"Please wait/refresh the page, make sure you've provided secret ID and select 'Share Location'"
   },
   UNIT:"m"
 })
