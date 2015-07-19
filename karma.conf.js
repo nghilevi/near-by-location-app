@@ -20,6 +20,7 @@ module.exports = function(config) {
       'src/scripts/constants.js',
       'src/scripts/services.js',
       'src/scripts/controller.js',
+      'src/scripts/directive.js',
       'test/unit/**/*.js'
     ],
 
