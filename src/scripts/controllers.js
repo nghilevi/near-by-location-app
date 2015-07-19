@@ -3,11 +3,11 @@ angular.module('appControllers', ['appServices'])
 .controller('listViewCtrl',function($scope, searchService,$timeout) {
   $scope.venueList = [];
   var timeoutPromise;
-  $scope.search = function(){
+  $scope.search = function(searchWords){
     $scope.loading = true;
     $timeout.cancel(timeoutPromise);
     timeoutPromise = $timeout(function() {
-      searchService.search($scope.searchWords).then(function (res) {
+      searchService.search(searchWords).then(function (res) {
         $scope.venueList= res;
       }).finally(function () {
         $scope.loading = false;
