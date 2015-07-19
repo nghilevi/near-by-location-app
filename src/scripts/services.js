@@ -8,6 +8,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
         param= clientConst[param.type]
       }
       angular.extend(resItem, {
+        location:param.location,
         name:param.name,
         distance: param.distance,
         address: param.address
@@ -49,7 +50,9 @@ angular.module("appServices",  ['appConstants','geolocation'])
     if(venuesArray.length != 0){
       //console.log('start loop by forEach');
       transformed=venuesArray.map(function(current){
+        console.log("current.location.lat",current.location.lat)
         return resItem.create({
+          location: current.location.lat+","+current.location.lng,
           name:current.name,
           distance:current.location.distance+clientConst.UNIT,
           address:(current.location.address || "")+ ' '+ (current.location.city || "")
@@ -58,7 +61,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
     }else{
       transformed=[resItem.create({type:"ZERO_RESULT"})];
     }
-    //console.log('transformed',transformed)
+    console.log('transformed',transformed)
     return transformed;
   }
   return  {search: search};

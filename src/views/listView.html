@@ -4,11 +4,13 @@
 </div>
 
 <div class="venueList ul">
-  <div ng-animate="'animate'" class="venue cf li" ng-repeat="item in venueList">
-    <li class="info">
-        <h3 class="name">{{item.name}} - {{item.distance}}</h3>
-        <p class="address">{{item.address}}</p>
-    </li>
+  <div ng-animate="'animate'" class="venue cf li" ng-repeat="venue in venueList">
+    <a href="http://maps.google.com/?q={{venue.location}}" target="_blank">
+      <li class="info">
+          <h3 class="name">{{venue.name}} - {{venue.distance}}</h3>
+          <p class="address">{{venue.address}}</p>
+      </li>
+    </a>
   </div>
 </div>
 
