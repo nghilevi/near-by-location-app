@@ -1,21 +1,24 @@
 angular.module("appServices",  ['appConstants','geolocation'])
 
-.factory('searchService',function($http,$q,geolocation,clientConst){
-  var baseURL;
-
-  geolocation.getLocation().then(function(data){
-    baseURL= "https://api.foursquare.com/v2/venues/search"+
-        "?client_id="+clientConst.CLIENT_ID+
-        "&client_secret="+clientConst.CLIENT_SECRET+
-        "&v="+clientConst.CLIENT_VERSION+
-        "&ll="+data.coords.latitude+
-        ","+data.coords.longitude+
-        "&query="; 
-    console.log('baseURL',baseURL);
-  });
-
+.factory('fSBaseURL',function(geolocation,clientConst){
+    var baseURL;
+    geolocation.getLocation().then(function(data) {
+      if(clientConst.CLIENT_VERSION){
+        baseURL = "https://api.foursquare.com/v2/venues/search" +
+          "?client_id=" + clientConst.CLIENT_ID +
+          "&client_secret=" + clientConst.CLIENT_SECRET +
+          "&v=" + clientConst.CLIENT_VERSION +
+          "&ll=" + data.coords.latitude +
+          "," + data.coords.longitude +
+          "&query=";
+      }
+    })
+    return{
+      getBaseURL: function () {return baseURL}
+    }
+})
+.factory('searchService',function($http,$q,fSBaseURL,clientConst){
   function successRes(res) {return res.data}
-  function errorRes(res) {return res}
   function transformLocationData(data,headerGetter){
     data = angular.fromJson(data);
     //console.log("raw data",data)
@@ -39,10 +42,11 @@ angular.module("appServices",  ['appConstants','geolocation'])
   }
 
   var search = function(query){
-    if(baseURL==undefined || clientConst.CLIENT_SECRET==""){
-      return $q.resolve([clientConst["ERROR"]]);
+    var baseURL = fSBaseURL.getBaseURL();
+    if(baseURL){
+      return $http.get(baseURL+query,{transformResponse: transformLocationData}).then(successRes)
     }else{
-      return $http.get(baseURL+query,{transformResponse: transformLocationData}).then(successRes,errorRes)
+      return $q.resolve([clientConst["ERROR"]]);
     }
   }
 
