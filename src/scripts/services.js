@@ -43,8 +43,9 @@ angular.module("appServices",  ['appConstants','geolocation'])
   function transformLocationData(data,headerGetter){
     //console.log('headerGetter',headerGetter);
     data = angular.fromJson(data);
+    console.log("raw data",data)
     var transformed, venuesArray = data.response.venues;
-    //console.log('venuesArray',venuesArray)
+    console.log('venuesArray',venuesArray)
     if(venuesArray.length != 0){
       //console.log('start loop by forEach');
       transformed=venuesArray.map(function(current){
@@ -68,10 +69,11 @@ angular.module("appServices",  ['appConstants','geolocation'])
     $timeout.cancel(timeoutPromise);
     timeoutPromise = $timeout(function() {
       locationService.search(scope.searchWords).then(function (res) {
-        scope.resultsList= res;
+        console.log("success res",res)
+        scope.venueList= res;
       }, function (res) {
-        console.log("res",res)
-        scope.resultsList= res==404 ? [resItem.create({type:"ERROR"})] : [resItem.create({type:"CALM"})];
+        console.log("fail res",res)
+        scope.venueList= res==404 ? [resItem.create({type:"ERROR"})] : [resItem.create({type:"CALM"})];
       });
     }, 500);
   }

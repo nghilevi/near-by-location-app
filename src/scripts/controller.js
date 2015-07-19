@@ -1,7 +1,7 @@
 angular.module('appControllers', ['appServices'])
 
 .controller('listViewCtrl',function($scope, searchService) {
-  $scope.resultsList = [];
+  $scope.venueList = [];
   $scope.search = function(){
     searchService.search($scope)
   }
