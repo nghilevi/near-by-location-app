@@ -33,7 +33,7 @@ describe('Controller: listViewCtrl', function() {
     expect(scope.loading).toBeFalsy;
   });
 
-  describe('The search function', function () {
+  xdescribe('The search function', function () {
     beforeEach(function () {
       scope.search(validSearchWord);
       $timeout.flush();
