@@ -33,7 +33,7 @@ describe('Controller: listViewCtrl', function() {
     expect(scope.loading).toBeFalsy;
   });
 
-  xdescribe('The search function', function () {
+  describe('The search function', function () {
     beforeEach(function () {
       scope.search(validSearchWord);
       $timeout.flush();
@@ -48,7 +48,7 @@ describe('Controller: listViewCtrl', function() {
       expect(scope.venueList.length).toBeGreaterThan(0);
     })
 
-    it('should return venue item in the right format after searching', function() {
+    it('should execute and return venue item in the right format', function() {
       var venue = scope.venueList[0]
       for(key in venue){
         if(venue.hasOwnProperty(key)){
