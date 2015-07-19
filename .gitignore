@@ -1,4 +1,5 @@
 #files
+.idea/workspace.xml
 src/scripts/secret.txt
 src/scripts/constants.js
 Requirements.txt
@@ -8,4 +9,6 @@ npm-debug.log
 .idea/
 node_modules/
 bower_components/
+
+
 
