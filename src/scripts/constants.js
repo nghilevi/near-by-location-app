@@ -22,5 +22,5 @@ angular.module("appConstants",[])
     distance:"",
     address:"Please wait or refresh the page, and remember to choose 'Share Location'"
   },
-  UNIT:"m away"
+  UNIT:"m"
 })

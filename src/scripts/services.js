@@ -54,7 +54,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
         return resItem.create({
           location: current.location.lat+","+current.location.lng,
           name:current.name,
-          distance:current.location.distance+clientConst.UNIT,
+          distance:current.location.distance,
           address:(current.location.address || "")+ ' '+ (current.location.city || "")
         });
       });

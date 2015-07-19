@@ -10,6 +10,6 @@ angular.module('appDirectives', []).directive('venueItem', function () {
     link: function (scope) {
       //console.log("scope.venue",scope.venue)
     },
-    template:"<a href=\"http://maps.google.com/?q={{venue.location}}\" target=\"_blank\">\n  <li class=\"info\">\n    <h3 class=\"name\">{{venue.name}} - {{venue.distance}}</h3>\n    <p class=\"address\">{{venue.address}}</p>\n  </li>\n</a>"
+    template:"<a href=\"http://maps.google.com/?q={{venue.location}}\" target=\"_blank\">\n  <li class=\"info\">\n    <h3 class=\"name\">{{venue.name}}{{venue.distance | venueDistance}}</h3>\n    <p class=\"address\">{{venue.address}}</p>\n  </li>\n</a>"
   }
 })

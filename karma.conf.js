@@ -21,6 +21,7 @@ module.exports = function(config) {
       'src/scripts/services.js',
       'src/scripts/controller.js',
       'src/scripts/directive.js',
+      'src/scripts/filters.js',
       'test/unit/**/*.js'
     ],
 
