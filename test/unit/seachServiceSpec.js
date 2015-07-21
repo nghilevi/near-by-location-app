@@ -15,7 +15,7 @@ describe('searchService', function () {
     clientConst=_clientConst_;
   }))
 
-  it('should return error message if baseUrl is unavailable', function () {
+  xit('should return error message if baseUrl is unavailable', function () {
     var venueList
     spyOn(fSBaseUrl,"getBaseURL").and.returnValue(undefined)
     searchService.search(searchWords).then(function (data) {

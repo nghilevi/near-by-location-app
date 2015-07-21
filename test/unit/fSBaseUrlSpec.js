@@ -7,42 +7,44 @@ describe('fSBaseUrl Service', function () {
   var clientConst,$rootScope; //dependencies w/o being mocked
 
   // other variables/mock data/services
-  var baseUrlBuilder,clientConstMock;
+  var baseUrlBuilder,deferred,$scope;
   var user_coords={
     coords:{
       latitude:'1',
       longitude:'2'
     }
   }
-  var mockGeolocation = { getLocation: function () { // create the mock service
-
-    return {
-      then: function(callback){callback(user_coords)} //TODO how to inject data
-    }
-  }}
+  // way 1
+  //var mockGeolocation = { getLocation: function () { // create the mock service
+  //  return {
+  //    then: function(callback){callback(user_coords)} //TODO how to inject data
+  //  }
+  //}}
   var geolocation;
 
   beforeEach(module('appServices')); //invoke the module
 
   beforeEach(function () {
-    module(function ($provide) {
-      $provide.value('geolocation', mockGeolocation) // REGISTER the mock service
-    });
+    // way 1
+    //module(function ($provide) {
+    //  $provide.value('geolocation', mockGeolocation) // REGISTER the mock service
+    //});
 
-    inject(function(_fSBaseUrl_,$q,_clientConst_,_$rootScope_,_baseUrlBuilder_,_geolocation_) {
+    inject(function(_fSBaseUrl_,_$q_,_clientConst_,_$rootScope_,_baseUrlBuilder_,_geolocation_) {
 
-      $rootScope=_$rootScope_; //undefined()
+      $scope=_$rootScope_.$new(); //undefined()
       clientConst = _clientConst_;
       baseUrlBuilder=_baseUrlBuilder_;
+
+      geolocation=_geolocation_;
+
+      // Use a Jasmine Spy to return the deferred promise
+      spyOn(geolocation, 'getLocation').and.returnValue({
+        then:function(callback){callback(user_coords)} //quick & dirty way
+      });
+      //spyOn(geolocation, 'getLocation').and.returnValue(_$q_.defer().promise);
+
       fSBaseUrl=_fSBaseUrl_;
-
-      // add mock behavior using spy
-      geolocation = _geolocation_
-      var deferred = $q.defer();
-      deferred.resolve(user_coords);
-      spyOn(geolocation,"getLocation").and.returnValue(deferred.promise);
-
-
     });
   });
 
