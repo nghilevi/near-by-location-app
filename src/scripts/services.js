@@ -1,19 +1,44 @@
 angular.module("appServices",  ['appConstants','geolocation'])
-
-.factory('fSBaseURL',function(geolocation,clientConst){
+.value('baseUrlBuilder',{
+    baseUrl:"",
+    id: function (id) {
+      this.baseUrl+="?client_id=" + id
+      return this;
+    },
+    secret: function (secret) {
+      this.baseUrl+="&client_secret=" + secret
+      return this;
+    },
+    version: function (v) {
+      this.baseUrl+="&v=" + v;
+      return this;
+    },
+    geoData: function (data) {
+      this.baseUrl+="&ll=" + data.coords.latitude +"," + data.coords.longitude +"&query="
+      return this;
+    },
+    get: function () {
+      return this.baseUrl
+    },
+    init: function () {
+      this.baseUrl= "https://api.foursquare.com/v2/venues/search"
+      return this
+    }
+  })
+.factory('fSBaseURL',function(geolocation,clientConst,baseUrlBuilder){
     var baseUrl;
 
     function initBaseUrl() {
 
       geolocation.getLocation().then(function(data) {
         if(clientConst.CLIENT_SECRET){
-          baseUrl = "https://api.foursquare.com/v2/venues/search" +
-            "?client_id=" + clientConst.CLIENT_ID +
-            "&client_secret=" + clientConst.CLIENT_SECRET +
-            "&v=" + clientConst.CLIENT_VERSION +
-            "&ll=" + data.coords.latitude +
-            "," + data.coords.longitude +
-            "&query=";
+          baseUrl=baseUrlBuilder
+            .init()
+            .id(clientConst.CLIENT_ID)
+            .secret(clientConst.CLIENT_SECRET)
+            .version(clientConst.CLIENT_VERSION)
+            .geoData(data)
+            .get()
         }
       });
       return baseUrl;

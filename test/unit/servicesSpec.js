@@ -2,47 +2,24 @@
  * Created by nghi on 21.7.2015.
  */
 describe('Services', function () {
+  var fSBaseURL,geolocation,clientConst,$rootScope;
+  var user_coords={
+    coords:{
+      latitude:'1',
+      longitude:'2'
+    }
+  }
+  var baseUrlBuilder;
+
   beforeEach(module('appServices'));
   describe('fSBaseURL', function () {
-    var fSBaseURL,geolocation,clientConst,$rootScope;
-    var user_coords={
-      coords:{
-        latitude:'1',
-        longitude:'2'
-      }
-    }
-    var baseUrlBuilder = {
-      baseUrl:"",
-      id: function (id) {
-        this.baseUrl+="?client_id=" + id
-        return this;
-      },
-      secret: function (secret) {
-        this.baseUrl+="&client_secret=" + secret
-        return this;
-      },
-      version: function (v) {
-        this.baseUrl+="&v=" + v;
-        return this;
-      },
-      geoData: function (data) {
-        this.baseUrl+="&ll=" + data.coords.latitude +"," + data.coords.longitude +"&query="
-        return this;
-      },
-      get: function () {
-        return this.baseUrl
-      },
-      init: function () {
-        this.baseUrl= "https://api.foursquare.com/v2/venues/search"
-        return this
-      }
-    }
 
     beforeEach(function () {
-      inject(function(_fSBaseURL_,$q,_clientConst_, _geolocation_,_$rootScope_) {
+      inject(function(_fSBaseURL_,$q,_clientConst_,_$rootScope_,_baseUrlBuilder_) {
         $rootScope=_$rootScope_;
         clientConst = _clientConst_;
         fSBaseURL=_fSBaseURL_;
+        baseUrlBuilder=_baseUrlBuilder_;
 
         geolocation = { //have to defind it, otherwise it wont find the getLocation fn
           getLocation:function(){
@@ -80,7 +57,7 @@ describe('Services', function () {
       expect(clientConst.CLIENT_SECRET.length).toBe(clientIDLength)
     });
 
-    it('should return a proper url', function () {
+    it('should return a proper url if client secret is available', function () {
       var baseUrl = baseUrlBuilder
         .init()
         .id(clientConst.CLIENT_ID)
@@ -92,7 +69,22 @@ describe('Services', function () {
       expect(geolocation.getLocation).toHaveBeenCalled()
       expect(expectedBaseUrl).toBe(baseUrl)
     });
+    it('should returnu ndefined if client secret is undefined', function () {
+      clientConst.CLIENT_SECRET = undefined;
+      var expectedBaseUrl = fSBaseURL.getBaseURL();
+      expect(expectedBaseUrl).toBeUndefined()
+    });
 
   });
+  describe('searchService', function () {
+    it('should return error message if baseUrl is unavailable', function () {
 
+    });
+    it('should return zero result message if there is no result', function () {
+
+    });
+    it('should results when get success', function () {
+
+    });
+  })
 });
