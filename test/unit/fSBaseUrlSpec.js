@@ -29,18 +29,26 @@ describe('fSBaseUrl Service', function () {
     //module(function ($provide) {
     //  $provide.value('geolocation', mockGeolocation) // REGISTER the mock service
     //});
+    module(function ($provide) {
+      $provide.constant('clientConst', { // must be constant to take effect, if use value or service ... no effect
+          CLIENT_ID:1,
+          CLIENT_SECRET:1,
+          CLIENT_VERSION:1
+      })
+    });
 
     inject(function(_fSBaseUrl_,_$q_,_clientConst_,_$rootScope_,_baseUrlBuilder_,_geolocation_) {
 
       $scope=_$rootScope_.$new(); //undefined()
       clientConst = _clientConst_;
+      console.log("clientConst2",clientConst)
       baseUrlBuilder=_baseUrlBuilder_;
 
       geolocation=_geolocation_;
 
       // Use a Jasmine Spy to return the deferred promise
       spyOn(geolocation, 'getLocation').and.returnValue({
-        then:function(callback){callback(user_coords)} //quick & dirty way
+        then:function(callback){callback(user_coords)} //TODO need to replace this quick & dirty way
       });
       //spyOn(geolocation, 'getLocation').and.returnValue(_$q_.defer().promise);
 
@@ -60,8 +68,8 @@ describe('fSBaseUrl Service', function () {
     expect(expectedBaseUrl).toBe(baseUrl)
   });
 
-  xit('should return undefined if client secret is missing', function () {
-    //TODO mock clientConst at this stage
+  it('should return undefined if client secret is missing', function () {
+    clientConst.CLIENT_SECRET=""
     var expectedBaseUrl = fSBaseUrl.getBaseURL();
     expect(expectedBaseUrl).toBeUndefined()
   });
