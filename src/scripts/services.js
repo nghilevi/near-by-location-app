@@ -42,7 +42,6 @@ angular.module("appServices",  ['appConstants','geolocation'])
             .get()
         }
       });
-      console.log("baseUrl",baseUrl)
       return baseUrl;
     }
 
@@ -50,7 +49,8 @@ angular.module("appServices",  ['appConstants','geolocation'])
 
     return{
       getBaseURL: function () {
-        return baseUrl ? baseUrl : initBaseUrl()}
+        return baseUrl ? baseUrl : initBaseUrl()
+      }
     }
 })
 .factory('searchService',function($http,$q,fSBaseUrl,clientConst){

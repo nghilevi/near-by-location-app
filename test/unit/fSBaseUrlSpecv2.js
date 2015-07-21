@@ -1,7 +1,10 @@
 /**
  * Created by nghi on 21.7.2015.
  */
-describe('fSBaseUrl Service', function () {
+/**
+ * Created by nghi on 21.7.2015.
+ */
+xdescribe('fSBaseUrl Service', function () {
   var fSBaseUrl; // the setvice on test
 
   var clientConst,$rootScope; //dependencies w/o being mocked
@@ -26,7 +29,13 @@ describe('fSBaseUrl Service', function () {
 
   beforeEach(function () {
     module(function ($provide) {
-      $provide.value('geolocation', mockGeolocation) // REGISTER the mock service
+      $provide.service('geolocation', function($q){
+        return {
+          getLocation: function () {
+            return $q.resolve(user_coords);
+          }
+        }
+      }) // REGISTER the mock service
     });
 
     inject(function(_fSBaseUrl_,$q,_clientConst_,_$rootScope_,_baseUrlBuilder_,_geolocation_) {
@@ -36,15 +45,15 @@ describe('fSBaseUrl Service', function () {
       baseUrlBuilder=_baseUrlBuilder_;
       fSBaseUrl=_fSBaseUrl_;
 
-      // add mock behavior using spy
-      geolocation = _geolocation_
-      var deferred = $q.defer();
-      deferred.resolve(user_coords);
-      spyOn(geolocation,"getLocation").and.returnValue(deferred.promise);
-
-
     });
   });
+
+  it('should call geolocation.getLocation when getBaseUrl', function () {
+    fSBaseUrl.getBaseURL();
+    expect(geolocation.getLocation).toHaveBeenCalled()
+  });
+
+
 
   it('should return a correct url if client secret is available', function () {
     var baseUrl = baseUrlBuilder
@@ -58,8 +67,10 @@ describe('fSBaseUrl Service', function () {
     expect(expectedBaseUrl).toBe(baseUrl)
   });
 
-  xit('should return undefined if client secret is missing', function () {
+  it('should return undefined if client secret is undefined', function () {
     //TODO mock clientConst at this stage
+    clientConst.CLIENT_SECRET = "";
+    spyOn(clientConst,"CLIENT_SECRET")
     var expectedBaseUrl = fSBaseUrl.getBaseURL();
     expect(expectedBaseUrl).toBeUndefined()
   });

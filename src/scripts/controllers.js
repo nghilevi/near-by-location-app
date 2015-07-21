@@ -7,7 +7,7 @@ angular.module('appControllers', ['appServices'])
     $scope.loading = true;
     $timeout.cancel(timeoutPromise);
     timeoutPromise = $timeout(function() {
-      searchService.search(searchWords).then(function (res) {
+      searchService.search(searchWords).then(function(res) {
         $scope.venueList= res;
       }).finally(function () {
         $scope.loading = false;
