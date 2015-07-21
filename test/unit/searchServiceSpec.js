@@ -4,18 +4,24 @@
 describe('searchService', function () {
   var searchService;
 
-  var $http,$q,fSBaseUrl,clientConst;
+  var $http,$q,fSBaseUrl,clientConst,$httpBackend;
 
-  var searchWords = "sushi", notFoundSearchWords="!@#$%^&"
+  var searchWords = "sushi", notFoundSearchWords="!@#$%^&";
 
   beforeEach(module("appServices"));
-  beforeEach(inject(function (_$http_,_$q_,_fSBaseUrl_,_clientConst_,_searchService_) {
+  beforeEach(inject(function (_$http_,_$q_,_fSBaseUrl_,_clientConst_,_searchService_,_$httpBackend_) {
     searchService=_searchService_;
     fSBaseUrl=_fSBaseUrl_;
     clientConst=_clientConst_;
+    $httpBackend=_$httpBackend_;
+    //$httpBackend
+    //  .when('GET', 'http://localhost/foo')
+    //  .respond(200, { foo: 'bar' });
+    //
+    //$httpBackend.flush();
   }))
 
-  xit('should return error message if baseUrl is unavailable', function () {
+  it('should return error message if baseUrl is unavailable', function () {
     var venueList
     spyOn(fSBaseUrl,"getBaseURL").and.returnValue(undefined)
     searchService.search(searchWords).then(function (data) {
