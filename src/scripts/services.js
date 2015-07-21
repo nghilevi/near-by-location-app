@@ -6,7 +6,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
     function initBaseUrl() {
 
       geolocation.getLocation().then(function(data) {
-        if(clientConst.CLIENT_VERSION){
+        if(clientConst.CLIENT_SECRET){
           baseUrl = "https://api.foursquare.com/v2/venues/search" +
             "?client_id=" + clientConst.CLIENT_ID +
             "&client_secret=" + clientConst.CLIENT_SECRET +

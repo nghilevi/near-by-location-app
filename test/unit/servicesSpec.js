@@ -12,7 +12,7 @@ describe('Services', function () {
       }
     }
     var baseUrlBuilder = {
-      baseUrl: "https://api.foursquare.com/v2/venues/search",
+      baseUrl:"",
       id: function (id) {
         this.baseUrl+="?client_id=" + id
         return this;
@@ -31,6 +31,10 @@ describe('Services', function () {
       },
       get: function () {
         return this.baseUrl
+      },
+      init: function () {
+        this.baseUrl= "https://api.foursquare.com/v2/venues/search"
+        return this
       }
     }
 
@@ -51,23 +55,20 @@ describe('Services', function () {
 
         spyOn(geolocation,"getLocation").and.returnValue(deferred.promise);
         spyOn(fSBaseURL,"getBaseURL").and.callFake(function () {
-
-          function initBaseUrl() {
-            var baseUrl;
-            geolocation.getLocation().then(function (data) {
-              if(clientConst.CLIENT_VERSION){
-                baseUrl=baseUrlBuilder
-                  .id(clientConst.CLIENT_ID)
-                  .secret(clientConst.CLIENT_SECRET)
-                  .version(clientConst.CLIENT_VERSION)
-                  .geoData(data)
-                  .get()
-              }
-            });
-            $rootScope.$apply()
-            return baseUrl;
-          }
-          return initBaseUrl();
+          var baseUrl;
+          geolocation.getLocation().then(function (data) {
+            if(clientConst.CLIENT_SECRET){
+              baseUrl=baseUrlBuilder
+                .init()
+                .id(clientConst.CLIENT_ID)
+                .secret(clientConst.CLIENT_SECRET)
+                .version(clientConst.CLIENT_VERSION)
+                .geoData(data)
+                .get()
+            }
+          });
+          $rootScope.$apply()
+          return baseUrl;
         })
       });
 
@@ -81,13 +82,17 @@ describe('Services', function () {
 
     it('should return a proper url', function () {
       var baseUrl = baseUrlBuilder
+        .init()
         .id(clientConst.CLIENT_ID)
         .secret(clientConst.CLIENT_SECRET)
         .version(clientConst.CLIENT_VERSION)
         .geoData(user_coords)
         .get();
       var expectedBaseUrl = fSBaseURL.getBaseURL();
+      expect(geolocation.getLocation).toHaveBeenCalled()
+      expect(expectedBaseUrl).toBe(baseUrl)
     });
 
   });
+
 });
