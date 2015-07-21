@@ -25,12 +25,13 @@ angular.module("appServices",  ['appConstants','geolocation'])
       return this
     }
   })
-.factory('fSBaseURL',function(geolocation,clientConst,baseUrlBuilder){
+.factory('fSBaseUrl',function(geolocation,clientConst,baseUrlBuilder){
     var baseUrl;
 
     function initBaseUrl() {
 
-      geolocation.getLocation().then(function(data) {
+      geolocation.getLocation().then(function(data) { // how to test these chunk of code to make sure codecoverage
+
         if(clientConst.CLIENT_SECRET){
           baseUrl=baseUrlBuilder
             .init()
@@ -41,6 +42,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
             .get()
         }
       });
+      console.log("baseUrl",baseUrl)
       return baseUrl;
     }
 
@@ -51,7 +53,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
         return baseUrl ? baseUrl : initBaseUrl()}
     }
 })
-.factory('searchService',function($http,$q,fSBaseURL,clientConst){
+.factory('searchService',function($http,$q,fSBaseUrl,clientConst){
   function successRes(res) {return res.data}
   function transformLocationData(data,headerGetter){
     data = angular.fromJson(data);
@@ -76,7 +78,7 @@ angular.module("appServices",  ['appConstants','geolocation'])
   }
 
   var search = function(query){
-    var baseUrl = fSBaseURL.getBaseURL();
+    var baseUrl = fSBaseUrl.getBaseURL();
     if(baseUrl){
       return $http.get(baseUrl+query,{transformResponse: transformLocationData}).then(successRes)
     }else{
