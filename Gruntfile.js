@@ -15,7 +15,13 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
+        configFile: 'karma.conf.js',
+        singleRun: false,
+        plugins:[ //this helps solving the problem of "Can not load "coverage", it is not registered!"
+          'karma-jasmine',
+          'karma-coverage',
+          'karma-phantomjs-launcher'
+        ]
       }
     },
     protractor: {
