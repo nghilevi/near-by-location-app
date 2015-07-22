@@ -29,7 +29,6 @@ angular.module("appServices",  ['appConstants','geolocation'])
     var baseUrl;
 
     function initBaseUrl() {
-
       geolocation.getLocation().then(function(data) { // how to test these chunk of code to make sure codecoverage
 
         if(clientConst.CLIENT_SECRET){
