@@ -36,7 +36,8 @@ module.exports = function(config) {
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
       'src/scripts/controllers.js': 'coverage',
-      'src/scripts/services.js': 'coverage'
+      'src/scripts/services.js': 'coverage',
+      'src/scripts/filters.js': 'coverage'
     },
 
     // test results reporter to use
