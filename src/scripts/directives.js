@@ -1,7 +1,8 @@
 /**
  * Created by nghi on 19.7.2015.
  */
-angular.module('appDirectives', []).directive('venueItem', function () {
+angular.module('appDirectives', ['appFilters']) //appFilters as dependency is important for unit test 2 work
+  .directive('venueItem', function () {
   return{
     restrict:'E',
     scope:{
