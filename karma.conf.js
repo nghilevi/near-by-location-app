@@ -38,7 +38,8 @@ module.exports = function(config) {
       'src/scripts/controllers.js': 'coverage',
       'src/scripts/services.js': 'coverage',
       'src/scripts/filters.js': 'coverage',
-      'src/scripts/directives.js': 'coverage'
+      'src/scripts/directives.js': 'coverage',
+      'src/scripts/constants.js': 'coverage'
     },
 
     // test results reporter to use
