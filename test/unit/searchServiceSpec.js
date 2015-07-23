@@ -41,7 +41,6 @@ describe('searchService', function () {
 
       spyOn($q,"resolve")
       spyOn($http,"get").and.returnValue($q.when())
-
       spyOn(fSBaseUrl,"getBaseURL").and.returnValue(mockBaseUrl);
     })
   })
@@ -60,7 +59,7 @@ describe('searchService', function () {
   });
 
   describe('transform response', function () {
-    var result,requestHandler;
+    var result;
     beforeEach(function () {
       $http.get.and.callThrough();
       $httpBackend.when('GET',mockBaseUrl+searchWords).respond(mockRsponseData)
