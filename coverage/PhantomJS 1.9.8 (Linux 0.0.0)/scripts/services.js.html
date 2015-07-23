@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header medium">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">scripts/services.js</span></h1>
     <h2>
-        Statements: <span class="metric">78.38% <small>(29 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">50% <small>(6 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">80% <small>(12 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">80.56% <small>(29 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(37 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">83.33% <small>(10 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(15 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(36 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">scripts/</a> &#187; services.js</div>
@@ -169,35 +169,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">4</span>
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,27 +258,27 @@
     }
 })
 .factory('searchService',function($http,$q,fSBaseUrl,clientConst){
-<span class="fstat-no" title="function not covered" >  function successRes(res) {<span class="cstat-no" title="statement not covered" ></span>return res.data}</span>
-<span class="fstat-no" title="function not covered" >  function transformLocationData(data,headerGetter){</span>
-<span class="cstat-no" title="statement not covered" >    data = angular.fromJson(data);</span>
+  function successRes(res) {return res.data}
+  function transformLocationData(data,headerGetter){
+    data = angular.fromJson(data);
     //console.log("raw data",data)
-<span class="cstat-no" title="statement not covered" >    var transformed, venuesArray = data.response.venues;</span>
+    var transformed, venuesArray = data.response.venues;
     //console.log('venuesArray',venuesArray)
-<span class="cstat-no" title="statement not covered" >    if(venuesArray.length != 0){</span>
-<span class="cstat-no" title="statement not covered" >      transformed=venuesArray.map(<span class="fstat-no" title="function not covered" >function(current){</span></span>
+    if(venuesArray.length != 0){
+      transformed=venuesArray.map(function(current){
         //console.log("current.location.lat",current.location.lat)
-<span class="cstat-no" title="statement not covered" >        return {</span>
+        return {
           location: current.location.lat+","+current.location.lng,
           name:current.name,
           distance:current.location.distance,
-          address:(current.location.address || "")+ ' '+ (current.location.city || "")
+          address:(current.location.address || <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>+ ' '+ (current.location.city || <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>
         };
       });
     }else{
-<span class="cstat-no" title="statement not covered" >      transformed=[clientConst["ZERO_RESULT"]];</span>
+      transformed=[clientConst["ZERO_RESULT"]];
     }
     //console.log('transformed',transformed)
-<span class="cstat-no" title="statement not covered" >    return transformed;</span>
+    return transformed;
   }
 &nbsp;
   var search = function(query){
@@ -297,7 +297,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 23 2015 12:47:04 GMT+0300 (EEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 23 2015 15:05:18 GMT+0300 (EEST)</div>
 </div>
 <script src="../prettify.js"></script>
 <script>
