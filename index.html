@@ -30,13 +30,13 @@ This is a small sized web application which can be fit inside a larger app. The 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>Below are some of the instructions on runing the web app locally (recommended as it always has the latest updates and the user can run tests)</p>
+<p>Below are a brief instructions on runing the web app locally (which is recommended as it always has the latest updates and the user can run the tests)</p>
 
 <ul>
 <li>Run <code>bower install</code> and <code>npm install</code> to install bower and node dependencies </li>
 <li>Remember to enter your <code>secretID</code> inside <code>src/scripts/constants.js</code>
 </li>
-<li>Open the <code>index.html</code> on a web (local) server to run the app.</li>
+<li>Open the <code>index-main.html</code> on a web (local) server to run the app.</li>
 <li>Optionally, remember to click on "Share location" so that the browser can detect your location.</li>
 <li>Run <code>karma start</code> or <code>grunt test</code> to run the tests.</li>
 <li>karma.conf.js stores the karma config. Currently it uses PhantomJS, a headless browser, to run unit test. You can configure it to be <code>Firefox</code> or <code>Chrome</code> to your preference in the <code>browsers</code> property. If you choose <code>Chrome</code>, you have to also install chrome launcher for karma by issuing <code>npm install karma-chrome-launcher</code>
@@ -48,11 +48,18 @@ This is a small sized web application which can be fit inside a larger app. The 
 
 <p>As can be seen in package.json and bower.json, the develop stacks includes: </p>
 
-<p>Dependencies for frontend development:
-<code>angularjs, angular-route, angularjs-geolocation, angular-animate, jquery, bootstrap</code></p>
+<ul>
 
-<p>Dependencies for unit &amp; E2E testing:
-<code>angular-mocks, protractor, karma, jasmine, phantomjs, karma-coverage (istanbul)</code></p>
+    <li>Dependencies for frontend development:
+    <code>angularjs, angular-route, angularjs-geolocation, angular-animate, jquery, bootstrap</code></li>
+    <li>Dependencies for unit &amp; E2E testing:
+    <code>angular-mocks, protractor, karma, jasmine, phantomjs, karma-coverage (istanbul)</code></li>
+
+</ul>
+<p>
+
+
+
 
 <p>The project also employes <code>Travis</code> for CI and <code>Grunt</code> for automated buid tool system.</p>
 
