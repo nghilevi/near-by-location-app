@@ -46,7 +46,7 @@ module.exports = function (grunt) {
     copy: {
       main: {
         files: [
-          //{src: 'index.html', dest: 'dist/index.html'},
+          //{src: 'index-main.html', dest: 'dist/index.html'},
           //{src: 'src/views/404.html', dest: 'dist/src/views/404.html'},
           //{src: 'src/views/listView.html', dest: 'dist/src/views/listView.html'}
         ]
