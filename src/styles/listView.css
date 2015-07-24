@@ -1,0 +1,101 @@
+/* ---------------------------- list-view ----------------------- */
+/* Search Styles */
+.search {
+  border: 1px solid black;
+  padding: 10px;
+  z-index: 20;
+  background-color: #D3D3D3;
+  text-align: center;
+}
+
+.search input {
+  font-family: callunaregular,Arial;
+  padding: 8px 0 8px 8px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid black;
+  outline: 0;
+  width: 60%;
+}
+
+/* Projects List Styles */
+.venueList {
+  min-width: 320px;
+  opacity: .95;
+  z-index: 10;
+}
+
+.venueList.ul {
+  background: #E6F5F5;
+}
+
+.venueList .li {
+  background: #E6F5F5;
+  margin: 0;
+  border: 1px solid black;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;  
+}
+
+.venueList a {
+  display: block;
+  text-decoration: none;
+}
+
+.venueList .li:hover {
+  background: #FDF6E3;
+  opacity: 0.9;
+}
+
+/* No padding surrouding background cover image*/
+.col-xs-6, .col-md-4 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.info {
+  height: 6vw;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  list-style: none;
+}
+
+.info .name, .info .distance{
+  font-weight: bold;
+}
+
+.info .address{
+}
+
+
+/* Animation on typing */
+.venue.ng-enter.ng-enter-active,
+.venue.ng-leave{
+  opacity: 1;
+  overflow: hidden;
+}
+
+.venue.ng-leave.ng-leave-active,
+.venue.ng-enter{
+  opacity: 0;
+  overflow: hidden;
+}
+
+#back-to-top{
+  position: fixed;
+  bottom: 0;
+  left:48%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 10px #888;
+     -moz-box-shadow: 0 0 10px #888;
+          box-shadow: 0 0 10px #888;
+}
+
+#back-to-top:hover{
+  opacity: 0.8;
+}
