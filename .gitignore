@@ -1,6 +1,6 @@
 #files
 .idea/workspace.xml
-src/scripts/secret.txt
+Notes.txt
 src/scripts/constants.js
 Requirements.txt
 npm-debug.log

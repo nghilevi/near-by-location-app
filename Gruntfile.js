@@ -34,6 +34,15 @@ module.exports = function (grunt) {
         files: {
           'dist/src/scripts/<%= pkg.name %>.annotated.min.js': ['dist/src/scripts/<%= pkg.name %>.annotated.js'] //TODO use template
         }
+      },
+      bower:{
+        options: {
+          mangle: true,
+          compress: true
+        },
+        files: {
+          'dist/src/scripts/libs.min.js': 'dist/src/scripts/libs.js'
+        }
       }
     },
     cssmin:{
@@ -62,6 +71,12 @@ module.exports = function (grunt) {
           {src: 'src/views/404.html', dest: 'dist/src/views/404.html'},
           {src: 'src/views/listView.html', dest: 'dist/src/views/listView.html'}
         ]
+      }
+    },
+    bower_concat:{
+      all: {
+        dest: 'dist/src/scripts/libs.js',
+        cssDest: 'dist/src/styles/libs.css',
       }
     },
     watch: { //TODO
@@ -115,6 +130,10 @@ module.exports = function (grunt) {
     'protractor_webdriver:start',
     'protractor:e2e'
   ]);
-  grunt.registerTask('default', ['concat','htmlmin','cssmin','ngAnnotate','uglify','copy']);//'copy'
+  grunt.registerTask('default', ['concat','htmlmin','cssmin','ngAnnotate','uglify:dist','copy']);//'copy'
   grunt.registerTask('build', ['test','default']);
+  grunt.registerTask('buildbower', [
+    'bower_concat',
+    'uglify:bower'
+  ]);
 }
