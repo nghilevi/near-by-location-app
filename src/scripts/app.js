@@ -1,7 +1,8 @@
 angular.module('nearByLocationApp',
   ['ngAnimate','ngRoute','appControllers','appServices','appDirectives'])
 
-.config(function ($routeProvider) {
+.config(function ($routeProvider,$httpProvider) {
+    $httpProvider.interceptors.push('fSClientParamsInjector')
     $routeProvider
     .when('/', {
       templateUrl: 'src/views/listView.html',
