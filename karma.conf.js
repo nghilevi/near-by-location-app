@@ -16,17 +16,20 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angularjs-geolocation/src/geolocation.js',
-      'src/scripts/app.js',
-      'src/scripts/constants.js',
-      'src/scripts/services.js',
-      'src/scripts/controllers.js',
-      'src/scripts/directives.js',
-      'src/scripts/filters.js',
+      //'src/scripts/app.js',
+      //'src/scripts/constants.js',
+      //'src/scripts/services.js',
+      //'src/scripts/controllers.js',
+      //'src/scripts/directives.js',
+      //'src/scripts/filters.js',
+      'src/scripts/**/*.js',
       'test/unit/**/*.js'
     ],
 
     // list of files to exclude
     exclude: [
+      'test/unit/searchServiceSpec.js',
+      'test/unit/searchService1Spec.js'
     ],
 
     // preprocess matching files before serving them to the browser
