@@ -8,13 +8,7 @@ describe('fSBaseUrl Service', function () {
 
   // other variables/mock data/services
   var baseUrlBuilder,deferred,$scope;
-  var user_coords={
-    coords:{
-      latitude:'1',
-      longitude:'2'
-    }
-  }
-  var geolocation;
+  var userCoords,geolocation;
 
   beforeEach(module('appServices')); //invoke the module
 
@@ -29,13 +23,14 @@ describe('fSBaseUrl Service', function () {
       $provide.factory('geolocation', function ($q) {
         return {
           getLocation: function () {
-            return $q.resolve(user_coords)
+            return $q.resolve(userCoords)
           }
         }
       })
     });
 
     inject(function(_$q_,_clientConst_,_$rootScope_,_baseUrlBuilder_,_geolocation_) {
+      userCoords=jasmine.mockData.userCoords()
       $scope=_$rootScope_.$new(); //undefined()
       clientConst = _clientConst_;
       baseUrlBuilder=_baseUrlBuilder_;
@@ -51,7 +46,7 @@ describe('fSBaseUrl Service', function () {
       .id(clientConst.CLIENT_ID)
       .secret(clientConst.CLIENT_SECRET)
       .version(clientConst.CLIENT_VERSION)
-      .geoData(user_coords)
+      .geoData(userCoords)
       .get();
     var expectedBaseUrl = fSBaseUrl.getBaseURL(); //did not call geolocation.getLocation so we have to make it call & resolve before injecting it!!!
     expect(expectedBaseUrl).toBe(baseUrl)

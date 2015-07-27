@@ -35,6 +35,7 @@ angular.module("appServices",  ['appConstants','geolocation','appInterceptors'])
     }
 
     var search = function(query){
+      console.log("ass")
       if(llData){
         var config = {
           url: clientConst.API_URL,

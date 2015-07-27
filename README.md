@@ -22,6 +22,6 @@ As can be seen in package.json and bower.json, the develop stacks includes:
 
 * Dependencies for frontend development:
 `angularjs, angular-route, angularjs-geolocation, angular-animate, jquery, bootstrap`
-* Dependencies for unit & E2E testing:
+* Dependencies for unit & E2E/acceptance testing:
 `angular-mocks, protractor, karma, jasmine, phantomjs, karma-coverage (istanbul)`
 * The project also employes `Travis` for CI and `Grunt` for automated buid tool system.
