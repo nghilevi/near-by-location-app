@@ -1,33 +1,14 @@
 /**
  * Created by nghi on 21.7.2015.
  */
-describe('searchService', function () {
+xdescribe('searchService', function () {
   var searchService;
 
   var $http,$q,fSBaseUrl,clientConst,$httpBackend,scope;
 
   var mockBaseUrl="/4square?q=",searchWords = "sushi", notFoundSearchWords="!@#$%^&",standardRes;
-  var mockRsponseData = {
-    response:{
-      venues:[
-        {
-          location:{lat:1,lng:1,distance:100,address:"finland",city:"oulu"},
-          name:"a",
-          someOtherProp:"someOtherProp"
-        },
-        {
-          location:{lat:1,lng:3,distance:300,address:"finland",city:"oulu"},
-          name:"b",
-          someOtherProp:"someOtherProp2"
-        }
-      ]
-    }
-  };
-  var emptyDataResponse={
-    response:{
-      venues:[]
-    }
-  }
+  var mockResponseData = jasmine.mockData.mockResponseData();
+  var emptyDataResponse=jasmine.mockData.emptyDataResponse();
   beforeEach(module("appServices"));
   beforeEach(function () {
     inject(function (_$http_,_$q_,_fSBaseUrl_,_clientConst_,_searchService_,_$httpBackend_,$rootScope) {
@@ -63,7 +44,7 @@ describe('searchService', function () {
     var result,requestHandler;
     beforeEach(function () {
       $http.get.and.callThrough();
-      $httpBackend.when('GET',mockBaseUrl+searchWords).respond(mockRsponseData)
+      $httpBackend.when('GET',mockBaseUrl+searchWords).respond(mockResponseData)
       $httpBackend.when('GET',mockBaseUrl+notFoundSearchWords).respond(emptyDataResponse)
     })
     afterEach(function() {
@@ -76,7 +57,7 @@ describe('searchService', function () {
       })
       $httpBackend.flush();
       var expectedResult=[];
-      mockRsponseData.response.venues.forEach(function (current) {
+      mockResponseData.response.venues.forEach(function (current) {
         var transformObj={
           location: current.location.lat+","+current.location.lng,
           name:current.name,

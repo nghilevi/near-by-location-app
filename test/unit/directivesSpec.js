@@ -19,18 +19,19 @@ describe('Directives', function () {
     scope.$digest();
   }))
 
-  it('should display venues item', function () {
-    var isolatedScope = element.isolateScope();
-    expect(isolatedScope.venue.length).toBe(venueList.length)
+  describe('venue-item', function () {
+    it('should display venues item', function () {
+      var isolatedScope = element.isolateScope();
+      expect(isolatedScope.venue.length).toBe(venueList.length)
+    });
+
+    it('should display nothing', function () {
+      var isolatedScope = element.isolateScope();
+      scope.venue =[]
+      scope.$digest();
+      expect(isolatedScope.venue.length).toBe(scope.venue.length)
+    });
+
   });
-
-  it('should display nothing', function () {
-    var isolatedScope = element.isolateScope();
-    scope.venue =[]
-    scope.$digest();
-    expect(isolatedScope.venue.length).toBe(scope.venue.length)
-  });
-
-
 
 })
