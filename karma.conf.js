@@ -23,7 +23,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      'src/scripts/services1.js',
+      'src/scripts/services-old.js',
       'test/unit/fSBaseUrlSpec.js',
       'test/unit/searchServiceSpec.js'
     ],

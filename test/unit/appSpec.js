@@ -1,7 +1,7 @@
 /**
  * Created by nghi on 23.7.2015.
  */
-describe('nearByLocationApp', function() {
+describe('App', function() {
   describe('routes', function () {
     beforeEach(module('nearByLocationApp'));
 

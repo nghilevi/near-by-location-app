@@ -1,7 +1,7 @@
 /**
  * Created by nghi on 27.7.2015.
  */
-describe('appServices', function () {
+describe('Services', function () {
   var http,q,clientConst,geolocation,searchService,defer,scope;
   var userCoords,mockResponseData,emptyDataResponse;
   var query='sushi';

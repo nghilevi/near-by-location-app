@@ -1,4 +1,4 @@
-describe('Controller: listViewCtrl', function() {
+describe('Controller', function() {
 
   var scope={},venueItem,validSearchWord="sushi",searchService;
   var venueItem={name:'sushi',location:"1,1",distance:"0",address:"Finland"};
@@ -20,20 +20,21 @@ describe('Controller: listViewCtrl', function() {
       });
     });
   });
+  describe('listViewCtrl', function () {
+    it('The venueList should be empty by default', function () {
+      expect(scope.venueList.length).toBe(0);
+    });
 
-  it('The venueList should be empty by default', function () {
-    expect(scope.venueList.length).toBe(0);
+    it('The loading should be true then changes to false after searching', function () {
+      scope.search(validSearchWord);
+      expect(scope.loading).toBeTruthy();
+      $timeout.flush();
+      $timeout.verifyNoPendingTasks();
+      expect(scope.loading).toBeFalsy;
+    });
   });
 
-  it('The loading should be true then changes to false after searching', function () {
-    scope.search(validSearchWord);
-    expect(scope.loading).toBeTruthy();
-    $timeout.flush();
-    $timeout.verifyNoPendingTasks();
-    expect(scope.loading).toBeFalsy;
-  });
-
-  describe('The search function', function () {
+  describe('listViewCtrl.search', function () {
     beforeEach(function () {
       scope.search(validSearchWord);
       $timeout.flush();

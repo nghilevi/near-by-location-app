@@ -1,7 +1,7 @@
 /**
  * Created by nghi on 21.7.2015.
  */
-describe('fSBaseUrl Service', function () {
+xdescribe('fSBaseUrl Service', function () {
   var fSBaseUrl; // the setvice on test
 
   var clientConst,$rootScope; //dependencies w/o being mocked

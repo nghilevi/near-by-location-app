@@ -1,7 +1,7 @@
 /**
  * Created by nghi on 21.7.2015.
  */
-describe('searchService', function () {
+xdescribe('searchService', function () {
   var searchService;
 
   var $http,$q,fSBaseUrl,clientConst,$httpBackend,scope;
