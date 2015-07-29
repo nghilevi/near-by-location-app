@@ -2,11 +2,13 @@
  * Created by nghi on 27.7.2015.
  */
 describe('Interceptors', function () {
-  var clientConst,fSClientParamsInjector,query="sushi",config;
+  var clientConst,fSClientParamsInjector,query="sushi",config,httpProvider;
 
   beforeEach(function () {
 
-    module('nearByLocationApp')
+    module('nearByLocationApp', function ($httpProvider) {
+      httpProvider=$httpProvider
+    })
 
     inject(function (_clientConst_,_fSClientParamsInjector_) {
       clientConst=_clientConst_,
@@ -22,6 +24,11 @@ describe('Interceptors', function () {
 
     })
   })
+
+  it('should have added fSClientParamsInjector and timeStampMarker as http interceptor', inject(function () {
+    expect(httpProvider.interceptors).toContain('fSClientParamsInjector');
+    expect(httpProvider.interceptors).toContain('timeStampMarker');
+  }));
 
   describe('fSClientParamsInjector', function () {
     it('should return a config obj with client id', function () {
