@@ -4,8 +4,9 @@
 angular.module("appServices",  ['appConstants','geolocation','appInterceptors'])
   .factory('searchService',function($http,$q,clientConst,geolocation){
     var llData;
-    geolocation.getLocation().then(function(data) { // how to test these chunk of code to make sure codecoverage
-      llData=data.coords.latitude +"," + data.coords.longitude
+    geolocation.getLocation().then(function(data) {
+      //llData=data.coords.latitude +"," + data.coords.longitude
+      llData=data
     });
     function successRes(res) {
       var time = res.config.respondTimeStamp - res.config.requestTimeStamp;
