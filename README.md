@@ -3,8 +3,8 @@ NearByLocation Web app using Foursquare API v2.
 This is a small sized web application which can be fit inside a larger app. The app is developed with scalibility and testability in mind.
 
 * [Online Demo](http://vinhnghi223.github.io/nLocationApp/dist/index.html#/)
-
 * [Test coverage](http://vinhnghi223.github.io/nLocationApp/coverage/PhantomJS%201.9.8%20\(Linux%200.0.0\)/index.html)
+* [Github page](http://vinhnghi223.github.io/nLocationApp/)
 
 ## Usage
 Below are some of the instructions on runing the web app locally (recommended as it always has the latest updates and the user can run tests)
