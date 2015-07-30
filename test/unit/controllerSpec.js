@@ -1,7 +1,7 @@
 describe('Controller', function() {
 
   var scope={},venueItem,validSearchWord="sushi",searchService;
-  var venueItem={name:'sushi',location:"1,1",distance:"0",address:"Finland"};
+  var venueItem={name:'sushi',location:"1,1",distance:"0",address:"Finland",someOtherProp:"something"};
   var $timeout;
 
   beforeEach(function () {
@@ -10,7 +10,7 @@ describe('Controller', function() {
       $timeout = _$timeout_;
       searchService={
         search: function () {
-          return $q.resolve([venueItem])
+          return $q.resolve([venueItem]) //same as when
         }
       };
       spyOn(searchService,"search").and.callThrough();
@@ -46,12 +46,13 @@ describe('Controller', function() {
     })
 
     it('should populate the list after searching', function() {
+      expect(scope.venueList).toEqual([venueItem])
       expect(scope.venueList.length).toBeGreaterThan(0);
     })
 
     it('should execute and return venue item in the right format', function() {
       var venue = scope.venueList[0]
-      for(key in venue){
+      for(key in venue){ //No need for this
         if(venue.hasOwnProperty(key)){
           expect(key).toBeDefined();
         }
