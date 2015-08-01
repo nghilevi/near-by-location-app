@@ -18,7 +18,8 @@ module.exports = function(config) {
       'bower_components/angularjs-geolocation/src/geolocation.js',
 
       'src/scripts/**/*.js',
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
+      //'test/lab/**/*.js'//TODO remove this
     ],
 
     // list of files to exclude
