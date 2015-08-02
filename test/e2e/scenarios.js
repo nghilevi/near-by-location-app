@@ -3,11 +3,14 @@
  */
 describe('Given the user opens the index page', function () {
   var searchInput,nameElem,validSearchWords="sushi",invalidSearchWords="!@#$%^&*()";
+  // TODO do research about http-backend-proxy
+
   beforeEach(function () {
-    browser.get('');
+    browser.get('/index-main.html');
     searchInput = element(by.model('searchWords'));
     nameElem=element.all(by.css('.name')).first();
   })
+
   afterEach(function () {
     searchInput.clear();
   })
@@ -20,6 +23,7 @@ describe('Given the user opens the index page', function () {
   describe("When the user shares location", function () {
     beforeEach(function () {
       //element(by.buttonText("Share Location")).click();
+      //browser.executeScript("navigator.geolocation.getCurrentPosition = function(success) { success({coords: {latitude: 50.455755, longitude: 30.511565}}); }");
     })
     describe("And the user types in a valid search words", function () {
       it('Then there will be results', function () {
