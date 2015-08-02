@@ -8,18 +8,22 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery','jasmine'],
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-animate/angular-animate.js',
-      'bower_components/angularjs-geolocation/src/geolocation.js',
+      //'bower_components/angular/angular.js',
+      //'bower_components/angular-mocks/angular-mocks.js',
+      //'bower_components/angular-route/angular-route.js',
+      //'bower_components/angular-animate/angular-animate.js',
+      //'bower_components/angularjs-geolocation/src/geolocation.js',
 
-      'src/scripts/**/*.js',
-      'test/unit/**/*.js',
-      //'test/lab/**/*.js'//TODO remove this
+      //
+      //'src/scripts/**/*.js',
+      //'test/unit/**/*.js',
+
+      //'bower_components/jquery/dist/jquery.js', //important for jasmine-jquery to run
+      //'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+      'test/lab/spec/**/*.js' //TODO remove this
     ],
 
     // list of files to exclude
@@ -59,7 +63,9 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
-
+    plugins: [
+      'karma-jasmine-jquery'
+    ],
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false
