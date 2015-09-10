@@ -44,10 +44,12 @@ module.exports = function(config) {
     reporters: ['coverage','progress'],
 
     coverageReporter:{
-    	reporters:{
-			type: 'cobertura',
-			dir: 'coverage/'
-    	}
+    	reporters:[
+	    	{
+				type: 'cobertura', //jenkins
+				dir: 'coverage/'
+	    	}
+    	]
     },
 
     // web server port
